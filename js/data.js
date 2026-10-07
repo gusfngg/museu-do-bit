@@ -63,7 +63,7 @@ const ACERVO = [
     curiosidade: "O padrão MSX foi criado em 1983 por empresas japonesas e pela Microsoft para unificar os computadores domésticos.",
   },
   {
-    id: "nes", nome: "Nintendo Entertainment System", fabricante: "Nintendo", ano: 1985, tipo: "console", pais: "Japão",
+    id: "nes", nome: "NES (Famicom)", fabricante: "Nintendo", ano: 1985, tipo: "console", pais: "Japão",
     cpu: "Ricoh 2A03 · ~1,79 MHz", memoria: "2 KB", midia: "Cartucho",
     perfil: "jogos", brasil: false,
     descricao: "Lançado como Famicom no Japão em 1983, chegou ao Ocidente em 1985 e reergueu o mercado de videogames.",
