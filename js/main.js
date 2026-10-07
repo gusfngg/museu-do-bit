@@ -1,335 +1,432 @@
-const Bit = (() => {
-  const $ = (seletor, raiz = document) => raiz.querySelector(seletor);
-  const $$ = (seletor, raiz = document) => [...raiz.querySelectorAll(seletor)];
+const TIPOS = { computador: "Computador", console: "Console", portatil: "Portátil" };
 
-  const guardar = {
-    ler(chave, padrao) {
-      try {
-        const bruto = localStorage.getItem(chave);
-        return bruto === null ? padrao : JSON.parse(bruto);
-      } catch {
-        return padrao;
-      }
-    },
-    gravar(chave, valor) {
-      try {
-        localStorage.setItem(chave, JSON.stringify(valor));
-      } catch {}
-    },
-  };
+let temporizadorToast;
+let modal;
+let idAberto = null;
+let listaNavegacao = [];
 
-  const TIPOS = { computador: "Computador", console: "Console", portatil: "Portátil" };
-  const pad = (n) => String(n).padStart(4, "0");
-  const pecaPorId = (id) => (typeof ACERVO !== "undefined" ? ACERVO.find((p) => p.id === id) : null);
-  const numeroDe = (id) => pad(ACERVO.findIndex((p) => p.id === id) + 1);
-
-  let temporizadorToast;
-  const toast = (mensagem) => {
-    const caixa = $("#toast");
-    if (!caixa) return;
-    caixa.textContent = mensagem;
-    caixa.classList.add("ativo");
-    clearTimeout(temporizadorToast);
-    temporizadorToast = setTimeout(() => caixa.classList.remove("ativo"), 2600);
-  };
-
-  const favoritos = {
-    lista: () => guardar.ler("bit-favoritos", []),
-    tem(id) {
-      return this.lista().includes(id);
-    },
-    alternar(id) {
-      const atual = this.lista();
-      const existe = atual.includes(id);
-      const nova = existe ? atual.filter((x) => x !== id) : [...atual, id];
-      guardar.gravar("bit-favoritos", nova);
-      document.dispatchEvent(new CustomEvent("bit:favoritos", { detail: { id, ativo: !existe } }));
-      const peca = pecaPorId(id);
-      if (peca) toast(existe ? `${peca.nome} saiu dos favoritos` : `${peca.nome} guardado nos favoritos`);
-      return !existe;
-    },
-  };
-
-  const atualizarFavoritosUI = () => {
-    const total = favoritos.lista().length;
-    const selo = $("#contFav");
-    if (selo) {
-      selo.textContent = total;
-      selo.dataset.zero = total === 0;
+function lerStorage(chave, padrao) {
+  try {
+    const valor = localStorage.getItem(chave);
+    if (valor === null) {
+      return padrao;
     }
-    $$("[data-fav-id]").forEach((botao) => {
-      const ativo = favoritos.tem(botao.dataset.favId);
-      botao.setAttribute("aria-pressed", ativo);
-      if (botao.classList.contains("btn")) botao.textContent = ativo ? "♥ Nos favoritos" : "♡ Favoritar";
-    });
-  };
+    return JSON.parse(valor);
+  } catch (erro) {
+    return padrao;
+  }
+}
 
-  const aplicarTema = (tema) => {
-    document.documentElement.dataset.tema = tema;
-    guardar.gravar("bit-tema-aero", tema);
-  };
+function salvarStorage(chave, valor) {
+  try {
+    localStorage.setItem(chave, JSON.stringify(valor));
+  } catch (erro) {
+    console.log("não foi possível salvar");
+  }
+}
 
-  const iniciarTema = () => {
-    const salvo = guardar.ler("bit-tema-aero", null);
-    aplicarTema(salvo || "claro");
-    const botao = $("#btnTema");
-    if (botao)
-      botao.addEventListener("click", () => {
-        const novo = document.documentElement.dataset.tema === "escuro" ? "claro" : "escuro";
-        aplicarTema(novo);
-        toast(`Tema ${novo}`);
-      });
-  };
+function buscarPeca(id) {
+  for (let i = 0; i < ACERVO.length; i++) {
+    if (ACERVO[i].id === id) {
+      return ACERVO[i];
+    }
+  }
+  return null;
+}
 
-  const iniciarCrt = () => {
-    const botao = $("#btnCrt");
-    const aplicar = (ligado) => {
-      document.body.classList.toggle("crt", ligado);
-      if (botao) botao.setAttribute("aria-pressed", ligado);
-      guardar.gravar("bit-crt", ligado);
-    };
-    aplicar(guardar.ler("bit-crt", false));
-    if (botao)
-      botao.addEventListener("click", () => {
-        const ligado = !document.body.classList.contains("crt");
-        aplicar(ligado);
-        toast(ligado ? "Efeito CRT ligado" : "Efeito CRT desligado");
-      });
-  };
+function numeroDaPeca(id) {
+  for (let i = 0; i < ACERVO.length; i++) {
+    if (ACERVO[i].id === id) {
+      return String(i + 1).padStart(4, "0");
+    }
+  }
+  return "0000";
+}
 
-  const iniciarMenu = () => {
-    const botao = $("#btnMenu");
-    const menu = $("#menu");
-    if (!botao || !menu) return;
-    const definir = (aberto) => {
-      menu.classList.toggle("menu--aberto", aberto);
-      botao.setAttribute("aria-expanded", aberto);
-      botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
-      document.body.classList.toggle("sem-rolagem", aberto);
-    };
-    botao.addEventListener("click", () => definir(botao.getAttribute("aria-expanded") !== "true"));
-    menu.addEventListener("click", (e) => {
-      if (e.target.closest("a")) definir(false);
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") definir(false);
-    });
-    window.matchMedia("(min-width: 861px)").addEventListener("change", (e) => e.matches && definir(false));
-    const atual = location.pathname.split("/").pop() || "index.html";
-    $$(".menu__link", menu).forEach((link) => {
-      if (link.getAttribute("href") === atual) link.setAttribute("aria-current", "page");
-    });
-  };
+function mostrarToast(mensagem) {
+  const toast = document.getElementById("toast");
+  if (toast === null) {
+    return;
+  }
+  toast.textContent = mensagem;
+  toast.classList.add("ativo");
+  clearTimeout(temporizadorToast);
+  temporizadorToast = setTimeout(function () {
+    toast.classList.remove("ativo");
+  }, 2600);
+}
 
-  const iniciarRolagem = () => {
-    const barra = $("#progresso");
-    const topo = $("#voltarTopo");
-    let esperando = false;
-    const atualizar = () => {
-      esperando = false;
-      const alto = document.documentElement.scrollHeight - innerHeight;
-      if (barra) barra.style.transform = `scaleX(${alto > 0 ? scrollY / alto : 0})`;
-      if (topo) topo.classList.toggle("visivel", scrollY > 700);
-    };
-    addEventListener(
-      "scroll",
-      () => {
-        if (!esperando) {
-          esperando = true;
-          requestAnimationFrame(atualizar);
-        }
-      },
-      { passive: true }
-    );
-    atualizar();
-    if (topo) topo.addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
-  };
+function pegarFavoritos() {
+  return lerStorage("bit-favoritos", []);
+}
 
-  const iniciarRevelar = () => {
-    const alvos = $$("[data-revelar]");
-    if (!("IntersectionObserver" in window)) return alvos.forEach((a) => a.classList.add("revelado"));
-    const obs = new IntersectionObserver(
-      (entradas) =>
-        entradas.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("revelado");
-            obs.unobserve(e.target);
-          }
-        }),
-      { threshold: 0.12 }
-    );
-    alvos.forEach((a, i) => {
-      a.style.setProperty("--atraso", `${(i % 6) * 70}ms`);
-      obs.observe(a);
-    });
-  };
+function ehFavorito(id) {
+  return pegarFavoritos().includes(id);
+}
 
-  const iniciarContadores = () => {
-    const alvos = $$("[data-contar]");
-    const rodar = (el) => {
-      const fim = Number(el.dataset.contar);
-      const sufixo = el.dataset.sufixo || "";
-      const inicio = performance.now();
-      const duracao = 1600;
-      const passo = (agora) => {
-        const t = Math.min(1, (agora - inicio) / duracao);
-        const suave = 1 - Math.pow(1 - t, 4);
-        el.textContent = Math.round(fim * suave).toLocaleString("pt-BR") + sufixo;
-        if (t < 1) requestAnimationFrame(passo);
-      };
-      requestAnimationFrame(passo);
-    };
-    if (!("IntersectionObserver" in window)) return alvos.forEach((a) => (a.textContent = a.dataset.contar + (a.dataset.sufixo || "")));
-    const obs = new IntersectionObserver(
-      (entradas) =>
-        entradas.forEach((e) => {
-          if (e.isIntersecting) {
-            rodar(e.target);
-            obs.unobserve(e.target);
-          }
-        }),
-      { threshold: 0.6 }
-    );
-    alvos.forEach((a) => obs.observe(a));
-  };
+function alternarFavorito(id) {
+  const favoritos = pegarFavoritos();
+  const peca = buscarPeca(id);
+  const posicao = favoritos.indexOf(id);
 
-  const cartaoPeca = (peca, opcoes = {}) => `
-    <article class="peca" data-id="${peca.id}" data-revelar>
-      ${peca.brasil ? '<span class="peca__tag">Brasil</span>' : ""}
-      <button class="peca__fav" data-fav-id="${peca.id}" aria-pressed="false" aria-label="Favoritar ${peca.nome}">♥</button>
-      <button class="peca__abrir" data-abrir="${peca.id}" aria-label="Ver detalhes de ${peca.nome}">
-        <div class="peca__palco"><img src="img/maquinas/${peca.id}.svg" alt="Ilustração do ${peca.nome}" width="320" height="240" loading="lazy"></div>
-        <div class="peca__placa">
-          <span class="peca__no">Nº ${numeroDe(peca.id)} · ${TIPOS[peca.tipo].toUpperCase()}</span>
-          <h3>${peca.nome}</h3>
-          <p>${peca.fabricante} · ${peca.ano}</p>
-        </div>
-      </button>
-      ${opcoes.comparar ? `<label class="peca__comparar"><input type="checkbox" data-comparar="${peca.id}"> Comparar</label>` : ""}
-    </article>`;
+  if (posicao === -1) {
+    favoritos.push(id);
+    mostrarToast(peca.nome + " guardado nos favoritos");
+  } else {
+    favoritos.splice(posicao, 1);
+    mostrarToast(peca.nome + " saiu dos favoritos");
+  }
 
-  let modal;
-  let idAberto = null;
-  let listaNavegacao = [];
+  salvarStorage("bit-favoritos", favoritos);
+  atualizarFavoritos();
+  if (typeof aoMudarFavoritos === "function") {
+    aoMudarFavoritos();
+  }
+}
 
-  const montarModal = () => {
-    modal = document.createElement("dialog");
-    modal.className = "modal";
-    modal.setAttribute("aria-labelledby", "modalTitulo");
-    modal.innerHTML = `
-      <div class="modal__barra">
-        <img src="img/logo.svg" alt="" width="72" height="48">
-        <span id="modalBarra">Museu do Bit</span>
-        <button class="modal__fechar" data-fechar type="button" aria-label="Fechar detalhes">✕</button>
-      </div>
-      <div class="modal__corpo">
-        <div class="modal__palco"><img id="modalImg" alt="" width="320" height="240"></div>
-        <div class="modal__info">
-          <span class="rotulo" id="modalNo"></span>
-          <h2 id="modalTitulo"></h2>
-          <p class="lead" id="modalDescricao"></p>
-          <dl class="ficha" id="modalFicha"></dl>
-          <blockquote class="curio" id="modalCurio"></blockquote>
-          <div class="modal__acoes">
-            <button class="btn" id="modalFav" type="button"></button>
-            <a class="btn btn--fantasma" id="modalLinha" href="#">Ver na linha do tempo</a>
-          </div>
-          <div class="modal__nav">
-            <button class="btn btn--fantasma btn--pequeno" data-nav="-1" type="button">‹ Anterior</button>
-            <button class="btn btn--fantasma btn--pequeno" data-nav="1" type="button">Próxima ›</button>
-          </div>
-        </div>
-      </div>`;
-    document.body.appendChild(modal);
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal || e.target.closest("[data-fechar]")) modal.close();
-      const nav = e.target.closest("[data-nav]");
-      if (nav) navegarModal(Number(nav.dataset.nav));
-    });
-    modal.addEventListener("close", () => (idAberto = null));
-    modal.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") navegarModal(1);
-      if (e.key === "ArrowLeft") navegarModal(-1);
-    });
-    $("#modalFav", modal).addEventListener("click", () => favoritos.alternar(idAberto));
-  };
+function atualizarFavoritos() {
+  const total = pegarFavoritos().length;
+  const selo = document.getElementById("contFav");
+  if (selo !== null) {
+    selo.textContent = total;
+    selo.dataset.zero = total === 0 ? "true" : "false";
+  }
 
-  const preencherModal = (peca) => {
-    idAberto = peca.id;
-    $("#modalImg", modal).src = `img/maquinas/${peca.id}.svg`;
-    $("#modalImg", modal).alt = `Ilustração do ${peca.nome}`;
-    $("#modalNo", modal).textContent = `Nº ${numeroDe(peca.id)} · ${TIPOS[peca.tipo]}`;
-    $("#modalTitulo", modal).textContent = peca.nome;
-    $("#modalBarra", modal).textContent = `Museu do Bit - ${peca.nome}`;
-    $("#modalDescricao", modal).textContent = peca.descricao;
-    $("#modalFicha", modal).innerHTML = [
-      ["Fabricante", peca.fabricante],
-      ["Ano", peca.ano],
-      ["País", peca.pais],
-      ["Processador", peca.cpu],
-      ["Memória", peca.memoria],
-      ["Mídia", peca.midia],
-    ]
-      .map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`)
-      .join("");
-    $("#modalCurio", modal).innerHTML = `<b>Você sabia?</b> ${peca.curiosidade}`;
-    const botaoFav = $("#modalFav", modal);
-    botaoFav.dataset.favId = peca.id;
-    $("#modalLinha", modal).href = `linha-do-tempo.html#ano-${peca.ano}`;
-    atualizarFavoritosUI();
-  };
+  const botoes = document.querySelectorAll("[data-fav-id]");
+  for (let i = 0; i < botoes.length; i++) {
+    const botao = botoes[i];
+    const ativo = ehFavorito(botao.dataset.favId);
+    botao.setAttribute("aria-pressed", ativo);
+    if (botao.classList.contains("btn")) {
+      botao.textContent = ativo ? "♥ Nos favoritos" : "♡ Favoritar";
+    }
+  }
+}
 
-  const navegarModal = (passo) => {
-    const lista = listaNavegacao.length ? listaNavegacao : ACERVO.map((p) => p.id);
-    const indice = lista.indexOf(idAberto);
-    if (indice < 0) return;
-    const proximo = lista[(indice + passo + lista.length) % lista.length];
-    preencherModal(pecaPorId(proximo));
-  };
+function aplicarTema(tema) {
+  document.documentElement.dataset.tema = tema;
+  salvarStorage("bit-tema-aero", tema);
+}
 
-  const abrirPeca = (id, lista = []) => {
-    const peca = pecaPorId(id);
-    if (!peca) return;
-    if (!modal) montarModal();
-    listaNavegacao = lista;
-    preencherModal(peca);
-    if (!modal.open) modal.showModal();
-  };
+function iniciarTema() {
+  let tema = lerStorage("bit-tema-aero", "claro");
+  aplicarTema(tema);
 
-  const iniciarCliquesPecas = () => {
-    document.addEventListener("click", (e) => {
-      const fav = e.target.closest(".peca__fav");
-      if (fav) return favoritos.alternar(fav.dataset.favId);
-      const abrir = e.target.closest("[data-abrir]");
-      if (abrir) {
-        const grade = abrir.closest(".grade-pecas");
-        const visiveis = grade ? $$(".peca:not([hidden])", grade).map((c) => c.dataset.id) : [];
-        abrirPeca(abrir.dataset.abrir, visiveis);
+  const botao = document.getElementById("btnTema");
+  botao.addEventListener("click", function () {
+    if (document.documentElement.dataset.tema === "escuro") {
+      aplicarTema("claro");
+      mostrarToast("Tema claro");
+    } else {
+      aplicarTema("escuro");
+      mostrarToast("Tema escuro");
+    }
+  });
+}
+
+function aplicarCrt(ligado) {
+  document.body.classList.toggle("crt", ligado);
+  document.getElementById("btnCrt").setAttribute("aria-pressed", ligado);
+  salvarStorage("bit-crt", ligado);
+}
+
+function iniciarCrt() {
+  aplicarCrt(lerStorage("bit-crt", false));
+  document.getElementById("btnCrt").addEventListener("click", function () {
+    const ligado = !document.body.classList.contains("crt");
+    aplicarCrt(ligado);
+    if (ligado) {
+      mostrarToast("Efeito CRT ligado");
+    } else {
+      mostrarToast("Efeito CRT desligado");
+    }
+  });
+}
+
+function abrirMenu(aberto) {
+  const menu = document.getElementById("menu");
+  const botao = document.getElementById("btnMenu");
+  menu.classList.toggle("menu--aberto", aberto);
+  botao.setAttribute("aria-expanded", aberto);
+  botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+  document.body.classList.toggle("sem-rolagem", aberto);
+}
+
+function iniciarMenu() {
+  const menu = document.getElementById("menu");
+  const botao = document.getElementById("btnMenu");
+
+  botao.addEventListener("click", function () {
+    const estaAberto = botao.getAttribute("aria-expanded") === "true";
+    abrirMenu(!estaAberto);
+  });
+
+  menu.addEventListener("click", function (e) {
+    if (e.target.closest("a")) {
+      abrirMenu(false);
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      abrirMenu(false);
+    }
+  });
+
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 860) {
+      abrirMenu(false);
+    }
+  });
+
+  let paginaAtual = location.pathname.split("/").pop();
+  if (paginaAtual === "") {
+    paginaAtual = "index.html";
+  }
+  const links = menu.querySelectorAll(".menu__link");
+  for (let i = 0; i < links.length; i++) {
+    if (links[i].getAttribute("href") === paginaAtual) {
+      links[i].setAttribute("aria-current", "page");
+    }
+  }
+}
+
+function animarContador(elemento) {
+  const final = Number(elemento.dataset.contar);
+  let atual = 0;
+  const passo = Math.max(1, Math.round(final / 40));
+  const intervalo = setInterval(function () {
+    atual = atual + passo;
+    if (atual >= final) {
+      atual = final;
+      clearInterval(intervalo);
+    }
+    elemento.textContent = atual;
+  }, 40);
+}
+
+function revelarElementos() {
+  const limite = window.innerHeight * 0.92;
+  const escondidos = document.querySelectorAll("[data-revelar]:not(.revelado)");
+  let ordem = 0;
+  for (let i = 0; i < escondidos.length; i++) {
+    if (escondidos[i].getBoundingClientRect().top < limite) {
+      escondidos[i].style.setProperty("--atraso", ordem * 70 + "ms");
+      escondidos[i].classList.add("revelado");
+      ordem++;
+    }
+  }
+
+  const contadores = document.querySelectorAll("[data-contar]");
+  for (let i = 0; i < contadores.length; i++) {
+    if (contadores[i].dataset.contando !== "sim" && contadores[i].getBoundingClientRect().top < limite) {
+      contadores[i].dataset.contando = "sim";
+      animarContador(contadores[i]);
+    }
+  }
+}
+
+function aoRolar() {
+  const barra = document.getElementById("progresso");
+  const botaoTopo = document.getElementById("voltarTopo");
+  const alturaTotal = document.documentElement.scrollHeight - window.innerHeight;
+  let porcentagem = 0;
+  if (alturaTotal > 0) {
+    porcentagem = window.scrollY / alturaTotal;
+  }
+  barra.style.transform = "scaleX(" + porcentagem + ")";
+  botaoTopo.classList.toggle("visivel", window.scrollY > 700);
+  revelarElementos();
+}
+
+function iniciarRolagem() {
+  window.addEventListener("scroll", aoRolar);
+  document.getElementById("voltarTopo").addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  aoRolar();
+}
+
+function criarCartao(peca, comparar) {
+  let html = '<article class="peca" data-id="' + peca.id + '" data-revelar>';
+  if (peca.brasil) {
+    html += '<span class="peca__tag">Brasil</span>';
+  }
+  html += '<button class="peca__fav" data-fav-id="' + peca.id + '" aria-pressed="false" aria-label="Favoritar ' + peca.nome + '">♥</button>';
+  html += '<button class="peca__abrir" data-abrir="' + peca.id + '" aria-label="Ver detalhes de ' + peca.nome + '">';
+  html += '<div class="peca__palco"><img src="img/maquinas/' + peca.id + '.svg" alt="Ilustração do ' + peca.nome + '" width="320" height="240" loading="lazy"></div>';
+  html += '<div class="peca__placa">';
+  html += '<span class="peca__no">Nº ' + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo].toUpperCase() + "</span>";
+  html += "<h3>" + peca.nome + "</h3>";
+  html += "<p>" + peca.fabricante + " · " + peca.ano + "</p>";
+  html += "</div></button>";
+  if (comparar) {
+    html += '<label class="peca__comparar"><input type="checkbox" data-comparar="' + peca.id + '"> Comparar</label>';
+  }
+  html += "</article>";
+  return html;
+}
+
+function desenharPecas(container, lista, comparar) {
+  let html = "";
+  for (let i = 0; i < lista.length; i++) {
+    html += criarCartao(lista[i], comparar);
+  }
+  container.innerHTML = html;
+  atualizarFavoritos();
+  revelarElementos();
+}
+
+function criarModal() {
+  modal = document.createElement("dialog");
+  modal.className = "modal";
+  modal.setAttribute("aria-labelledby", "modalTitulo");
+  modal.innerHTML =
+    '<div class="modal__barra">' +
+    '<img src="img/logo.svg" alt="" width="72" height="48">' +
+    '<span id="modalBarra">Museu do Bit</span>' +
+    '<button class="modal__fechar" data-fechar type="button" aria-label="Fechar detalhes">✕</button>' +
+    "</div>" +
+    '<div class="modal__corpo">' +
+    '<div class="modal__palco"><img id="modalImg" alt="" width="320" height="240"></div>' +
+    '<div class="modal__info">' +
+    '<span class="rotulo" id="modalNo"></span>' +
+    '<h2 id="modalTitulo"></h2>' +
+    '<p class="lead" id="modalDescricao"></p>' +
+    '<dl class="ficha" id="modalFicha"></dl>' +
+    '<blockquote class="curio" id="modalCurio"></blockquote>' +
+    '<div class="modal__acoes">' +
+    '<button class="btn" id="modalFav" type="button"></button>' +
+    '<a class="btn btn--fantasma" id="modalLinha" href="#">Ver na linha do tempo</a>' +
+    "</div>" +
+    '<div class="modal__nav">' +
+    '<button class="btn btn--fantasma btn--pequeno" data-nav="-1" type="button">‹ Anterior</button>' +
+    '<button class="btn btn--fantasma btn--pequeno" data-nav="1" type="button">Próxima ›</button>' +
+    "</div></div></div>";
+  document.body.appendChild(modal);
+
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal || e.target.closest("[data-fechar]")) {
+      modal.close();
+    }
+    const botaoNav = e.target.closest("[data-nav]");
+    if (botaoNav) {
+      navegarModal(Number(botaoNav.dataset.nav));
+    }
+  });
+
+  modal.addEventListener("close", function () {
+    idAberto = null;
+  });
+
+  modal.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") {
+      navegarModal(1);
+    }
+    if (e.key === "ArrowLeft") {
+      navegarModal(-1);
+    }
+  });
+
+  document.getElementById("modalFav").addEventListener("click", function () {
+    alternarFavorito(idAberto);
+  });
+}
+
+function preencherModal(peca) {
+  idAberto = peca.id;
+  document.getElementById("modalImg").src = "img/maquinas/" + peca.id + ".svg";
+  document.getElementById("modalImg").alt = "Ilustração do " + peca.nome;
+  document.getElementById("modalNo").textContent = "Nº " + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo];
+  document.getElementById("modalTitulo").textContent = peca.nome;
+  document.getElementById("modalBarra").textContent = "Museu do Bit - " + peca.nome;
+  document.getElementById("modalDescricao").textContent = peca.descricao;
+
+  const campos = [
+    ["Fabricante", peca.fabricante],
+    ["Ano", peca.ano],
+    ["País", peca.pais],
+    ["Processador", peca.cpu],
+    ["Memória", peca.memoria],
+    ["Mídia", peca.midia],
+  ];
+  let ficha = "";
+  for (let i = 0; i < campos.length; i++) {
+    ficha += "<div><dt>" + campos[i][0] + "</dt><dd>" + campos[i][1] + "</dd></div>";
+  }
+  document.getElementById("modalFicha").innerHTML = ficha;
+  document.getElementById("modalCurio").innerHTML = "<b>Você sabia?</b> " + peca.curiosidade;
+  document.getElementById("modalFav").dataset.favId = peca.id;
+  document.getElementById("modalLinha").href = "linha-do-tempo.html#ano-" + peca.ano;
+  atualizarFavoritos();
+}
+
+function navegarModal(passo) {
+  let lista = listaNavegacao;
+  if (lista.length === 0) {
+    lista = [];
+    for (let i = 0; i < ACERVO.length; i++) {
+      lista.push(ACERVO[i].id);
+    }
+  }
+  const posicao = lista.indexOf(idAberto);
+  if (posicao === -1) {
+    return;
+  }
+  let nova = posicao + passo;
+  if (nova < 0) {
+    nova = lista.length - 1;
+  }
+  if (nova >= lista.length) {
+    nova = 0;
+  }
+  preencherModal(buscarPeca(lista[nova]));
+}
+
+function abrirPeca(id, lista) {
+  const peca = buscarPeca(id);
+  if (peca === null) {
+    return;
+  }
+  if (modal === undefined) {
+    criarModal();
+  }
+  listaNavegacao = lista || [];
+  preencherModal(peca);
+  if (!modal.open) {
+    modal.showModal();
+  }
+}
+
+function cliqueNoDocumento(e) {
+  const botaoFav = e.target.closest(".peca__fav");
+  if (botaoFav) {
+    alternarFavorito(botaoFav.dataset.favId);
+    return;
+  }
+
+  const botaoAbrir = e.target.closest("[data-abrir]");
+  if (botaoAbrir) {
+    const grade = botaoAbrir.closest(".grade-pecas");
+    const ids = [];
+    if (grade) {
+      const cartoes = grade.querySelectorAll(".peca");
+      for (let i = 0; i < cartoes.length; i++) {
+        ids.push(cartoes[i].dataset.id);
       }
-    });
-    document.addEventListener("bit:favoritos", atualizarFavoritosUI);
-  };
+    }
+    abrirPeca(botaoAbrir.dataset.abrir, ids);
+  }
+}
 
-  const desenharPecas = (container, lista, opcoes = {}) => {
-    container.innerHTML = lista.map((p) => cartaoPeca(p, opcoes)).join("");
-    atualizarFavoritosUI();
-    iniciarRevelar();
-  };
+function iniciarSite() {
+  iniciarTema();
+  iniciarCrt();
+  iniciarMenu();
+  iniciarRolagem();
+  atualizarFavoritos();
+  document.addEventListener("click", cliqueNoDocumento);
+  document.getElementById("anoAtual").textContent = new Date().getFullYear();
+}
 
-  const iniciar = () => {
-    iniciarTema();
-    iniciarCrt();
-    iniciarMenu();
-    iniciarRolagem();
-    iniciarRevelar();
-    iniciarContadores();
-    iniciarCliquesPecas();
-    atualizarFavoritosUI();
-    const ano = $("#anoAtual");
-    if (ano) ano.textContent = new Date().getFullYear();
-  };
-
-  return { iniciar, $, $$, guardar, favoritos, toast, abrirPeca, desenharPecas, cartaoPeca, pecaPorId, numeroDe, TIPOS, atualizarFavoritosUI, iniciarRevelar };
-})();
-
-Bit.iniciar();
+iniciarSite();

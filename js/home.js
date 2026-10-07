@@ -1,243 +1,343 @@
-(() => {
-  const { $, $$, abrirPeca, desenharPecas, favoritos } = Bit;
+const saida = document.getElementById("termSaida");
+const formTerminal = document.getElementById("termForm");
+const entrada = document.getElementById("termEntrada");
+const historico = [];
+let posicaoHistorico = 0;
 
-  const destaques = $("#destaques");
-  if (destaques) {
-    const escolhidos = [...ACERVO].sort(() => Math.random() - 0.5).slice(0, 3);
-    desenharPecas(destaques, escolhidos);
+function sortearDestaques() {
+  const copia = ACERVO.slice();
+  const sorteadas = [];
+  for (let i = 0; i < 3; i++) {
+    const indice = Math.floor(Math.random() * copia.length);
+    sorteadas.push(copia[indice]);
+    copia.splice(indice, 1);
   }
+  desenharPecas(document.getElementById("destaques"), sorteadas, false);
+}
 
-  const saida = $("#termSaida");
-  const form = $("#termForm");
-  const entrada = $("#termEntrada");
-  const historico = [];
-  let posicao = 0;
-
-  const tocar = (arquivo) => {
-    const audio = new Audio(arquivo);
-    audio.play().catch(() => escrever("(o navegador bloqueou o áudio: clique na página e tente de novo)", "erro"));
-  };
-
-  function escrever(texto, classe = "") {
-    const linha = document.createElement("div");
-    linha.className = `term__linha ${classe}`.trim();
-    linha.textContent = texto;
-    saida.appendChild(linha);
-    saida.scrollTop = saida.scrollHeight;
+function escrever(texto, classe) {
+  const linha = document.createElement("div");
+  linha.className = "term__linha";
+  if (classe) {
+    linha.classList.add(classe);
   }
+  linha.textContent = texto;
+  saida.appendChild(linha);
+  saida.scrollTop = saida.scrollHeight;
+}
 
-  const buscar = (termo) => {
-    const t = termo.toLowerCase();
-    return ACERVO.find((p) => p.id === t || p.nome.toLowerCase().includes(t));
-  };
+function tocarSom(arquivo) {
+  const audio = new Audio(arquivo);
+  audio.play().catch(function () {
+    escrever("(o navegador bloqueou o áudio, clique na página e tente de novo)", "erro");
+  });
+}
 
-  const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+function procurarPeca(termo) {
+  termo = termo.toLowerCase();
+  for (let i = 0; i < ACERVO.length; i++) {
+    if (ACERVO[i].id === termo || ACERVO[i].nome.toLowerCase().includes(termo)) {
+      return ACERVO[i];
+    }
+  }
+  return null;
+}
 
-  const comandos = {
-    help() {
-      [
-        "help            lista os comandos",
-        "ls [tipo]       lista o acervo (computador, console, portatil)",
-        "info <nome>     ficha técnica de uma máquina",
-        "open <nome>     abre a peça no museu",
-        "random          sorteia uma peça",
-        "boot            liga o PC (som incluso)",
-        "modem           disca para a internet de 1995",
-        "sid             toca a melodia do chip de som",
-        "fav             mostra seus favoritos",
-        "tema            alterna claro/escuro",
-        "crt             liga/desliga o efeito CRT",
-        "clear           limpa a tela",
-      ].forEach((l) => escrever(l));
-    },
-    ls(arg) {
-      const filtro = (arg || "").toLowerCase().replace("ó", "o");
-      const lista = ACERVO.filter((p) => !filtro || p.tipo === filtro);
-      if (!lista.length) return escrever(`nenhum item do tipo "${arg}"`, "erro");
-      lista.forEach((p) => escrever(`${p.ano}  ${p.id.padEnd(16, " ")} ${p.nome}`));
-      escrever(`${lista.length} item(ns)`, "dim");
-    },
-    info(arg) {
-      const p = buscar(arg || "");
-      if (!p) return escrever("informe uma máquina: info commodore", "erro");
-      escrever(`${p.nome.toUpperCase()} (${p.ano}) — ${p.fabricante}, ${p.pais}`);
-      escrever(`cpu: ${p.cpu}`);
-      escrever(`memória: ${p.memoria}`);
-      escrever(`mídia: ${p.midia}`);
-      escrever(`> ${p.curiosidade}`, "dim");
-    },
-    open(arg) {
-      const p = buscar(arg || "");
-      if (!p) return escrever("informe uma máquina: open game boy", "erro");
-      escrever(`abrindo ${p.nome}...`, "dim");
-      abrirPeca(p.id);
-    },
-    random() {
-      const p = ACERVO[Math.floor(Math.random() * ACERVO.length)];
-      escrever(`sorteado: ${p.nome} (${p.ano})`);
-    },
-    async boot() {
-      tocar("audio/boot-pc.mp3");
-      for (const l of ["BIOS v1.0 (c) 1981", "Testando memória... 640K OK", "Detectando disquete A:... OK", "Carregando MUSEU.COM", "Bem-vindo ao Museu do Bit."]) {
-        escrever(l, "dim");
-        await esperar(380);
-      }
-    },
-    modem() {
-      tocar("audio/modem-discado.mp3");
-      escrever("ATDT 0800-BIT ... conectando a 28.8 kbps", "dim");
-    },
-    sid() {
-      tocar("audio/sid-melodia.mp3");
-      escrever("♪ tocando melodia sintetizada...", "dim");
-    },
-    fav() {
-      const lista = favoritos.lista();
-      if (!lista.length) return escrever("nenhum favorito ainda. Visite o acervo!", "dim");
-      lista.forEach((id) => escrever(`♥ ${Bit.pecaPorId(id).nome}`));
-    },
-    tema() {
-      $("#btnTema").click();
-    },
-    crt() {
-      $("#btnCrt").click();
-    },
-    clear() {
-      saida.innerHTML = "";
-    },
-    whoami() {
-      escrever(`visitante nº ${Math.floor(1000 + Math.random() * 8999)}`);
-    },
-    sudo() {
-      escrever("boa tentativa. Aqui o curador sou eu.", "erro");
-    },
-  };
+function comandoHelp() {
+  escrever("help            lista os comandos");
+  escrever("ls [tipo]       lista o acervo (computador, console, portatil)");
+  escrever("info <nome>     ficha técnica de uma máquina");
+  escrever("open <nome>     abre a peça no museu");
+  escrever("random          sorteia uma peça");
+  escrever("boot            liga o PC (som incluso)");
+  escrever("modem           disca para a internet de 1995");
+  escrever("sid             toca a melodia do chip de som");
+  escrever("fav             mostra seus favoritos");
+  escrever("tema            alterna claro/escuro");
+  escrever("crt             liga/desliga o efeito CRT");
+  escrever("clear           limpa a tela");
+}
 
-  const executar = async (texto) => {
-    escrever(`C:\\Museu> ${texto}`, "eco");
-    const [cmd, ...resto] = texto.trim().split(/\s+/);
-    if (!cmd) return;
-    const acao = comandos[cmd.toLowerCase()];
-    if (!acao) return escrever(`comando não encontrado: ${cmd}. Digite help.`, "erro");
-    await acao(resto.join(" "));
-  };
+function comandoLs(tipo) {
+  tipo = tipo.toLowerCase();
+  let total = 0;
+  for (let i = 0; i < ACERVO.length; i++) {
+    const peca = ACERVO[i];
+    if (tipo === "" || peca.tipo === tipo) {
+      escrever(peca.ano + "  " + peca.id.padEnd(16, " ") + " " + peca.nome);
+      total++;
+    }
+  }
+  if (total === 0) {
+    escrever('nenhum item do tipo "' + tipo + '"', "erro");
+  } else {
+    escrever(total + " item(ns)", "dim");
+  }
+}
 
-  if (form) {
-    escrever("Museu do Bit [Versão 1.0]\nCopyright (c) Museu do Bit. Digite help para começar.\n", "dim");
-    form.addEventListener("submit", (e) => {
+function comandoInfo(nome) {
+  const peca = procurarPeca(nome);
+  if (peca === null) {
+    escrever("informe uma máquina: info commodore", "erro");
+    return;
+  }
+  escrever(peca.nome.toUpperCase() + " (" + peca.ano + ") - " + peca.fabricante + ", " + peca.pais);
+  escrever("cpu: " + peca.cpu);
+  escrever("memória: " + peca.memoria);
+  escrever("mídia: " + peca.midia);
+  escrever("> " + peca.curiosidade, "dim");
+}
+
+function comandoOpen(nome) {
+  const peca = procurarPeca(nome);
+  if (peca === null) {
+    escrever("informe uma máquina: open game boy", "erro");
+    return;
+  }
+  escrever("abrindo " + peca.nome + "...", "dim");
+  abrirPeca(peca.id, []);
+}
+
+function comandoRandom() {
+  const peca = ACERVO[Math.floor(Math.random() * ACERVO.length)];
+  escrever("sorteado: " + peca.nome + " (" + peca.ano + ")");
+}
+
+function comandoBoot() {
+  tocarSom("audio/boot-pc.mp3");
+  const mensagens = [
+    "BIOS v1.0 (c) 1981",
+    "Testando memória... 640K OK",
+    "Detectando disquete A:... OK",
+    "Carregando MUSEU.COM",
+    "Bem-vindo ao Museu do Bit.",
+  ];
+  for (let i = 0; i < mensagens.length; i++) {
+    setTimeout(function () {
+      escrever(mensagens[i], "dim");
+    }, i * 380);
+  }
+}
+
+function comandoModem() {
+  tocarSom("audio/modem-discado.mp3");
+  escrever("ATDT 0800-BIT ... conectando a 28.8 kbps", "dim");
+}
+
+function comandoSid() {
+  tocarSom("audio/sid-melodia.mp3");
+  escrever("tocando melodia sintetizada...", "dim");
+}
+
+function comandoFav() {
+  const favoritos = pegarFavoritos();
+  if (favoritos.length === 0) {
+    escrever("nenhum favorito ainda. Visite o acervo!", "dim");
+    return;
+  }
+  for (let i = 0; i < favoritos.length; i++) {
+    escrever("♥ " + buscarPeca(favoritos[i]).nome);
+  }
+}
+
+function executarComando(texto) {
+  escrever("C:\\Museu> " + texto, "eco");
+  const partes = texto.trim().split(" ");
+  const comando = partes[0].toLowerCase();
+  const argumento = partes.slice(1).join(" ");
+
+  if (comando === "") {
+    return;
+  } else if (comando === "help") {
+    comandoHelp();
+  } else if (comando === "ls") {
+    comandoLs(argumento);
+  } else if (comando === "info") {
+    comandoInfo(argumento);
+  } else if (comando === "open") {
+    comandoOpen(argumento);
+  } else if (comando === "random") {
+    comandoRandom();
+  } else if (comando === "boot") {
+    comandoBoot();
+  } else if (comando === "modem") {
+    comandoModem();
+  } else if (comando === "sid") {
+    comandoSid();
+  } else if (comando === "fav") {
+    comandoFav();
+  } else if (comando === "tema") {
+    document.getElementById("btnTema").click();
+  } else if (comando === "crt") {
+    document.getElementById("btnCrt").click();
+  } else if (comando === "clear") {
+    saida.innerHTML = "";
+  } else if (comando === "whoami") {
+    escrever("visitante nº " + Math.floor(1000 + Math.random() * 8999));
+  } else if (comando === "sudo") {
+    escrever("boa tentativa. Aqui o curador sou eu.", "erro");
+  } else {
+    escrever("comando não encontrado: " + comando + ". Digite help.", "erro");
+  }
+}
+
+function iniciarTerminal() {
+  escrever("Museu do Bit [Versão 1.0]", "dim");
+  escrever("Copyright (c) Museu do Bit. Digite help para começar.", "dim");
+
+  formTerminal.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const texto = entrada.value;
+    if (texto.trim() !== "") {
+      historico.push(texto);
+      posicaoHistorico = historico.length;
+    }
+    entrada.value = "";
+    executarComando(texto);
+  });
+
+  entrada.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowUp" && historico.length > 0) {
       e.preventDefault();
-      const texto = entrada.value;
-      if (texto.trim()) {
-        historico.push(texto);
-        posicao = historico.length;
+      if (posicaoHistorico > 0) {
+        posicaoHistorico--;
       }
-      entrada.value = "";
-      executar(texto);
-    });
-    entrada.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp" && historico.length) {
-        posicao = Math.max(0, posicao - 1);
-        entrada.value = historico[posicao];
-        e.preventDefault();
+      entrada.value = historico[posicaoHistorico];
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (posicaoHistorico < historico.length) {
+        posicaoHistorico++;
       }
-      if (e.key === "ArrowDown") {
-        posicao = Math.min(historico.length, posicao + 1);
-        entrada.value = historico[posicao] || "";
-        e.preventDefault();
-      }
-    });
-    $("#terminal").addEventListener("click", () => entrada.focus());
+      entrada.value = historico[posicaoHistorico] || "";
+    }
+  });
+
+  document.getElementById("terminal").addEventListener("click", function () {
+    entrada.focus();
+  });
+}
+
+const perguntas = [
+  {
+    texto: "Num sábado livre, você prefere...",
+    opcoes: [
+      ["jogos", "Jogar com os amigos até tarde"],
+      ["programar", "Mexer em código ou desmontar algo"],
+      ["criar", "Desenhar, compor ou editar alguma coisa"],
+      ["trabalho", "Organizar planilhas e planos"],
+    ],
+  },
+  {
+    texto: "Seu superpoder seria...",
+    opcoes: [
+      ["jogos", "Reflexos de campeão"],
+      ["programar", "Resolver qualquer bug"],
+      ["criar", "Imaginação sem limites"],
+      ["trabalho", "Produtividade absurda"],
+    ],
+  },
+  {
+    texto: "Escolha uma trilha sonora",
+    opcoes: [
+      ["jogos", "Fase de chefão em 8 bits"],
+      ["programar", "Silêncio e o zumbido do ventilador"],
+      ["criar", "Sintetizadores caóticos"],
+      ["trabalho", "Jazz suave de escritório"],
+    ],
+  },
+  {
+    texto: "Qual época tem a sua cara?",
+    decada: true,
+    opcoes: [
+      [1975, "Anos 70, a pré-história"],
+      [1985, "Anos 80, a era de ouro"],
+      [1994, "Anos 90, o salto para o 3D"],
+    ],
+  },
+];
+
+const caixaQuiz = document.getElementById("quizCaixa");
+let etapa = 0;
+let pontos = { jogos: 0, programar: 0, criar: 0, trabalho: 0 };
+let anoDesejado = 1985;
+
+function mostrarResultado() {
+  let melhorPerfil = "jogos";
+  for (const perfil in pontos) {
+    if (pontos[perfil] > pontos[melhorPerfil]) {
+      melhorPerfil = perfil;
+    }
   }
 
-  const caixa = $("#quizCaixa");
-  if (caixa) {
-    const perguntas = [
-      {
-        texto: "Num sábado livre, você prefere...",
-        opcoes: [
-          ["jogos", "Jogar com os amigos até tarde"],
-          ["programar", "Mexer em código ou desmontar algo"],
-          ["criar", "Desenhar, compor ou editar alguma coisa"],
-          ["trabalho", "Organizar planilhas e planos"],
-        ],
-      },
-      {
-        texto: "Seu superpoder seria...",
-        opcoes: [
-          ["jogos", "Reflexos de campeão"],
-          ["programar", "Resolver qualquer bug"],
-          ["criar", "Imaginação sem limites"],
-          ["trabalho", "Produtividade absurda"],
-        ],
-      },
-      {
-        texto: "Escolha uma trilha sonora",
-        opcoes: [
-          ["jogos", "Fase de chefão em 8 bits"],
-          ["programar", "Silêncio e o zumbido do ventilador"],
-          ["criar", "Sintetizadores caóticos"],
-          ["trabalho", "Jazz suave de escritório"],
-        ],
-      },
-      {
-        texto: "Qual época tem a sua cara?",
-        decada: true,
-        opcoes: [
-          [1975, "Anos 70, a pré-história"],
-          [1985, "Anos 80, a era de ouro"],
-          [1994, "Anos 90, o salto para o 3D"],
-        ],
-      },
-    ];
-
-    let etapa = 0;
-    let pontos = {};
-    let anoDesejado = 1985;
-
-    const resultado = () => {
-      const topo = Object.entries(pontos).sort((a, b) => b[1] - a[1])[0]?.[0] || "jogos";
-      const candidatas = ACERVO.filter((p) => p.perfil === topo);
-      const peca = candidatas.sort((a, b) => Math.abs(a.ano - anoDesejado) - Math.abs(b.ano - anoDesejado))[0];
-      caixa.innerHTML = `
-        <div class="quiz__resultado">
-          <div class="quiz__img"><img src="img/maquinas/${peca.id}.svg" alt="Ilustração do ${peca.nome}" width="320" height="240"></div>
-          <div>
-            <span class="rotulo">Seu resultado</span>
-            <h3>Você é o ${peca.nome}</h3>
-            <p>${peca.descricao}</p>
-            <div class="hero__acoes">
-              <button class="btn" type="button" data-ver>Ver ficha completa</button>
-              <button class="btn btn--fantasma" type="button" data-refazer>Refazer o quiz</button>
-            </div>
-          </div>
-        </div>`;
-      $("[data-ver]", caixa).addEventListener("click", () => abrirPeca(peca.id));
-      $("[data-refazer]", caixa).addEventListener("click", () => {
-        etapa = 0;
-        pontos = {};
-        pergunta();
-      });
-    };
-
-    const pergunta = () => {
-      const q = perguntas[etapa];
-      caixa.innerHTML = `
-        <p class="quiz__passo mono">Pergunta ${etapa + 1} de ${perguntas.length}</p>
-        <div class="quiz__barra"><span style="width:${(etapa / perguntas.length) * 100}%"></span></div>
-        <h3>${q.texto}</h3>
-        <div class="quiz__opcoes">
-          ${q.opcoes.map(([valor, rotulo]) => `<button class="quiz__opcao" type="button" data-valor="${valor}">${rotulo}</button>`).join("")}
-        </div>`;
-      $$(".quiz__opcao", caixa).forEach((b) =>
-        b.addEventListener("click", () => {
-          if (q.decada) anoDesejado = Number(b.dataset.valor);
-          else pontos[b.dataset.valor] = (pontos[b.dataset.valor] || 0) + 1;
-          etapa++;
-          etapa < perguntas.length ? pergunta() : resultado();
-        })
-      );
-    };
-
-    pergunta();
+  let escolhida = null;
+  let menorDiferenca = 9999;
+  for (let i = 0; i < ACERVO.length; i++) {
+    if (ACERVO[i].perfil === melhorPerfil) {
+      const diferenca = Math.abs(ACERVO[i].ano - anoDesejado);
+      if (diferenca < menorDiferenca) {
+        menorDiferenca = diferenca;
+        escolhida = ACERVO[i];
+      }
+    }
   }
-})();
+
+  caixaQuiz.innerHTML =
+    '<div class="quiz__resultado">' +
+    '<div class="quiz__img"><img src="img/maquinas/' + escolhida.id + '.svg" alt="Ilustração do ' + escolhida.nome + '" width="320" height="240"></div>' +
+    "<div>" +
+    '<span class="rotulo">Seu resultado</span>' +
+    "<h3>Você é o " + escolhida.nome + "</h3>" +
+    "<p>" + escolhida.descricao + "</p>" +
+    '<div class="hero__acoes">' +
+    '<button class="btn" type="button" id="quizVer">Ver ficha completa</button>' +
+    '<button class="btn btn--fantasma" type="button" id="quizRefazer">Refazer o quiz</button>' +
+    "</div></div></div>";
+
+  document.getElementById("quizVer").addEventListener("click", function () {
+    abrirPeca(escolhida.id, []);
+  });
+  document.getElementById("quizRefazer").addEventListener("click", function () {
+    etapa = 0;
+    pontos = { jogos: 0, programar: 0, criar: 0, trabalho: 0 };
+    mostrarPergunta();
+  });
+}
+
+function responder(valor) {
+  if (perguntas[etapa].decada) {
+    anoDesejado = Number(valor);
+  } else {
+    pontos[valor]++;
+  }
+  etapa++;
+  if (etapa < perguntas.length) {
+    mostrarPergunta();
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarPergunta() {
+  const pergunta = perguntas[etapa];
+  let html = '<p class="quiz__passo mono">Pergunta ' + (etapa + 1) + " de " + perguntas.length + "</p>";
+  html += '<div class="quiz__barra"><span style="width:' + (etapa / perguntas.length) * 100 + '%"></span></div>';
+  html += "<h3>" + pergunta.texto + "</h3>";
+  html += '<div class="quiz__opcoes">';
+  for (let i = 0; i < pergunta.opcoes.length; i++) {
+    html += '<button class="quiz__opcao" type="button" data-valor="' + pergunta.opcoes[i][0] + '">' + pergunta.opcoes[i][1] + "</button>";
+  }
+  html += "</div>";
+  caixaQuiz.innerHTML = html;
+
+  const botoes = caixaQuiz.querySelectorAll(".quiz__opcao");
+  for (let i = 0; i < botoes.length; i++) {
+    botoes[i].addEventListener("click", function () {
+      responder(botoes[i].dataset.valor);
+    });
+  }
+}
+
+sortearDestaques();
+iniciarTerminal();
+mostrarPergunta();

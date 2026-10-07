@@ -1,161 +1,215 @@
-(() => {
-  const { $, $$, toast } = Bit;
+const cartoesSom = document.querySelectorAll(".som");
+const canvas = document.getElementById("visualizador");
+const contexto = canvas.getContext("2d");
+const controleVolume = document.getElementById("volume");
+const textoVolume = document.getElementById("volumeSaida");
+const videos = document.querySelectorAll("video");
 
-  const sons = $$(".som");
-  const tela = $("#visualizador");
-  const ctx2d = tela.getContext("2d");
-  const volume = $("#volume");
-  const volumeSaida = $("#volumeSaida");
-  const videos = $$("video");
+const usaAnalisador = location.protocol.startsWith("http");
+let audioContext = null;
+let analisador = null;
+let dadosFrequencia = null;
+let audioTocando = null;
+let fase = 0;
+const fontesCriadas = [];
 
-  const formatar = (s) => {
-    if (!isFinite(s)) return "0:00";
-    return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
-  };
+function formatarTempo(segundos) {
+  if (!isFinite(segundos)) {
+    return "0:00";
+  }
+  const minutos = Math.floor(segundos / 60);
+  const resto = Math.floor(segundos % 60);
+  return minutos + ":" + String(resto).padStart(2, "0");
+}
 
-  let audioCtx = null;
-  let analisador = null;
-  let dados = null;
-  const fontes = new WeakMap();
-  const usaAnalisador = location.protocol.startsWith("http") && "AudioContext" in window;
-
-  const prepararAnalisador = (audio) => {
-    if (!usaAnalisador) return;
-    try {
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-        analisador = audioCtx.createAnalyser();
-        analisador.fftSize = 128;
-        analisador.connect(audioCtx.destination);
-        dados = new Uint8Array(analisador.frequencyBinCount);
-      }
-      if (!fontes.has(audio)) {
-        const fonte = audioCtx.createMediaElementSource(audio);
-        fonte.connect(analisador);
-        fontes.set(audio, fonte);
-      }
-      if (audioCtx.state === "suspended") audioCtx.resume();
-    } catch {
-      analisador = null;
+function prepararAnalisador(audio) {
+  if (!usaAnalisador) {
+    return;
+  }
+  try {
+    if (audioContext === null) {
+      audioContext = new AudioContext();
+      analisador = audioContext.createAnalyser();
+      analisador.fftSize = 128;
+      analisador.connect(audioContext.destination);
+      dadosFrequencia = new Uint8Array(analisador.frequencyBinCount);
     }
-  };
-
-  let tocando = null;
-  let fase = 0;
-
-  const ajustarTela = () => {
-    const razao = window.devicePixelRatio || 1;
-    const caixa = tela.getBoundingClientRect();
-    tela.width = Math.round(caixa.width * razao);
-    tela.height = Math.round(caixa.height * razao);
-  };
-
-  const desenhar = () => {
-    const w = tela.width;
-    const h = tela.height;
-    const cor = getComputedStyle(document.documentElement).getPropertyValue("--ciano").trim() || "#2bb3e8";
-    ctx2d.clearRect(0, 0, w, h);
-    const barras = 32;
-    const larg = w / barras;
-    fase += 0.12;
-    if (analisador && tocando) analisador.getByteFrequencyData(dados);
-    for (let i = 0; i < barras; i++) {
-      let valor = 0.04;
-      if (tocando) {
-        valor = analisador
-          ? dados[Math.floor((i / barras) * dados.length * 0.7)] / 255
-          : 0.25 + 0.55 * Math.abs(Math.sin(fase + i * 0.45) * Math.cos(fase * 0.6 + i * 0.2));
-      }
-      const alto = Math.max(4, valor * h * 0.92);
-      const blocos = Math.max(1, Math.floor(alto / (larg * 0.9)));
-      for (let b = 0; b < blocos; b++) {
-        ctx2d.globalAlpha = 0.35 + (b / Math.max(blocos, 1)) * 0.65;
-        ctx2d.fillStyle = cor;
-        ctx2d.fillRect(i * larg + 2, h - (b + 1) * larg * 0.9, larg - 4, larg * 0.9 - 3);
-      }
+    if (!fontesCriadas.includes(audio)) {
+      const fonte = audioContext.createMediaElementSource(audio);
+      fonte.connect(analisador);
+      fontesCriadas.push(audio);
     }
-    ctx2d.globalAlpha = 1;
-    requestAnimationFrame(desenhar);
-  };
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+  } catch (erro) {
+    analisador = null;
+  }
+}
 
-  const pararTudo = (exceto) => {
-    sons.forEach((s) => {
-      const audio = $("audio", s);
-      if (audio !== exceto && !audio.paused) audio.pause();
-    });
-    videos.forEach((v) => v !== exceto && !v.paused && v.pause());
-  };
+function ajustarCanvas() {
+  const caixa = canvas.getBoundingClientRect();
+  canvas.width = caixa.width;
+  canvas.height = caixa.height;
+}
 
-  sons.forEach((cartao) => {
-    const audio = $("audio", cartao);
-    const botao = $(".som__tocar", cartao);
-    const prog = $(".som__prog", cartao);
-    const tempo = $(".som__tempo", cartao);
+function desenharBarras() {
+  const largura = canvas.width;
+  const altura = canvas.height;
+  const cor = getComputedStyle(document.documentElement).getPropertyValue("--ciano").trim() || "#2bb3e8";
+  const quantidade = 32;
+  const larguraBarra = largura / quantidade;
 
-    botao.addEventListener("click", () => {
-      if (audio.paused) {
-        pararTudo(audio);
-        prepararAnalisador(audio);
-        audio.play().catch(() => toast("Não foi possível reproduzir o áudio"));
+  contexto.clearRect(0, 0, largura, altura);
+  fase = fase + 0.12;
+
+  if (analisador !== null && audioTocando !== null) {
+    analisador.getByteFrequencyData(dadosFrequencia);
+  }
+
+  for (let i = 0; i < quantidade; i++) {
+    let valor = 0.04;
+    if (audioTocando !== null) {
+      if (analisador !== null) {
+        valor = dadosFrequencia[Math.floor((i / quantidade) * dadosFrequencia.length * 0.7)] / 255;
       } else {
-        audio.pause();
+        valor = 0.25 + 0.55 * Math.abs(Math.sin(fase + i * 0.45) * Math.cos(fase * 0.6 + i * 0.2));
       }
-    });
+    }
 
-    audio.addEventListener("play", () => {
-      tocando = audio;
-      sons.forEach((s) => s.classList.toggle("som--ativo", s === cartao));
-      botao.setAttribute("aria-label", `Pausar ${cartao.dataset.titulo}`);
-      botao.textContent = "❚❚";
-    });
-    const aoParar = () => {
-      if (tocando === audio) tocando = null;
-      cartao.classList.remove("som--ativo");
-      botao.setAttribute("aria-label", `Tocar ${cartao.dataset.titulo}`);
-      botao.textContent = "▶";
-    };
-    audio.addEventListener("pause", aoParar);
-    audio.addEventListener("ended", aoParar);
+    const alturaBarra = Math.max(4, valor * altura * 0.92);
+    let blocos = Math.floor(alturaBarra / (larguraBarra * 0.9));
+    if (blocos < 1) {
+      blocos = 1;
+    }
 
-    audio.addEventListener("loadedmetadata", () => {
-      tempo.textContent = `0:00 / ${formatar(audio.duration)}`;
-    });
-    audio.addEventListener("timeupdate", () => {
-      prog.value = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-      tempo.textContent = `${formatar(audio.currentTime)} / ${formatar(audio.duration)}`;
-    });
-    prog.addEventListener("input", () => {
-      if (audio.duration) audio.currentTime = (prog.value / 100) * audio.duration;
-    });
+    for (let b = 0; b < blocos; b++) {
+      contexto.globalAlpha = 0.35 + (b / blocos) * 0.65;
+      contexto.fillStyle = cor;
+      contexto.fillRect(i * larguraBarra + 2, altura - (b + 1) * larguraBarra * 0.9, larguraBarra - 4, larguraBarra * 0.9 - 3);
+    }
+  }
+  contexto.globalAlpha = 1;
+  requestAnimationFrame(desenharBarras);
+}
+
+function pararOutros(mediaAtual) {
+  for (let i = 0; i < cartoesSom.length; i++) {
+    const audio = cartoesSom[i].querySelector("audio");
+    if (audio !== mediaAtual && !audio.paused) {
+      audio.pause();
+    }
+  }
+  for (let i = 0; i < videos.length; i++) {
+    if (videos[i] !== mediaAtual && !videos[i].paused) {
+      videos[i].pause();
+    }
+  }
+}
+
+function configurarPlayer(cartao) {
+  const audio = cartao.querySelector("audio");
+  const botao = cartao.querySelector(".som__tocar");
+  const barra = cartao.querySelector(".som__prog");
+  const tempo = cartao.querySelector(".som__tempo");
+  const titulo = cartao.dataset.titulo;
+
+  botao.addEventListener("click", function () {
+    if (audio.paused) {
+      pararOutros(audio);
+      prepararAnalisador(audio);
+      audio.play().catch(function () {
+        mostrarToast("Não foi possível reproduzir o áudio");
+      });
+    } else {
+      audio.pause();
+    }
   });
 
-  volume.addEventListener("input", () => {
-    const v = Number(volume.value) / 100;
-    sons.forEach((s) => ($("audio", s).volume = v));
-    volumeSaida.textContent = `${volume.value}%`;
-  });
-  sons.forEach((s) => ($("audio", s).volume = Number(volume.value) / 100));
-
-  $$(".video-caixa").forEach((caixa) => {
-    const video = $("video", caixa);
-    const botaoCrt = $(".video__crt", caixa);
-    const botaoVel = $(".video__vel", caixa);
-    const velocidades = [1, 1.5, 2, 0.5];
-    let v = 0;
-
-    video.addEventListener("play", () => pararTudo(video));
-    botaoCrt.addEventListener("click", () => {
-      const ligado = caixa.classList.toggle("video-caixa--crt");
-      botaoCrt.setAttribute("aria-pressed", ligado);
-    });
-    botaoVel.addEventListener("click", () => {
-      v = (v + 1) % velocidades.length;
-      video.playbackRate = velocidades[v];
-      botaoVel.textContent = `Velocidade ${velocidades[v]}×`;
-    });
+  audio.addEventListener("play", function () {
+    audioTocando = audio;
+    for (let i = 0; i < cartoesSom.length; i++) {
+      cartoesSom[i].classList.toggle("som--ativo", cartoesSom[i] === cartao);
+    }
+    botao.setAttribute("aria-label", "Pausar " + titulo);
+    botao.textContent = "❚❚";
   });
 
-  addEventListener("resize", ajustarTela);
-  ajustarTela();
-  desenhar();
-})();
+  function aoParar() {
+    if (audioTocando === audio) {
+      audioTocando = null;
+    }
+    cartao.classList.remove("som--ativo");
+    botao.setAttribute("aria-label", "Tocar " + titulo);
+    botao.textContent = "▶";
+  }
+  audio.addEventListener("pause", aoParar);
+  audio.addEventListener("ended", aoParar);
+
+  audio.addEventListener("loadedmetadata", function () {
+    tempo.textContent = "0:00 / " + formatarTempo(audio.duration);
+  });
+
+  audio.addEventListener("timeupdate", function () {
+    if (audio.duration) {
+      barra.value = (audio.currentTime / audio.duration) * 100;
+    }
+    tempo.textContent = formatarTempo(audio.currentTime) + " / " + formatarTempo(audio.duration);
+  });
+
+  barra.addEventListener("input", function () {
+    if (audio.duration) {
+      audio.currentTime = (barra.value / 100) * audio.duration;
+    }
+  });
+}
+
+function mudarVolume() {
+  const volume = Number(controleVolume.value) / 100;
+  for (let i = 0; i < cartoesSom.length; i++) {
+    cartoesSom[i].querySelector("audio").volume = volume;
+  }
+  textoVolume.textContent = controleVolume.value + "%";
+}
+
+function configurarVideo(caixa) {
+  const video = caixa.querySelector("video");
+  const botaoCrt = caixa.querySelector(".video__crt");
+  const botaoVelocidade = caixa.querySelector(".video__vel");
+  const velocidades = [1, 1.5, 2, 0.5];
+  let indice = 0;
+
+  video.addEventListener("play", function () {
+    pararOutros(video);
+  });
+
+  botaoCrt.addEventListener("click", function () {
+    const ligado = caixa.classList.toggle("video-caixa--crt");
+    botaoCrt.setAttribute("aria-pressed", ligado);
+  });
+
+  botaoVelocidade.addEventListener("click", function () {
+    indice++;
+    if (indice >= velocidades.length) {
+      indice = 0;
+    }
+    video.playbackRate = velocidades[indice];
+    botaoVelocidade.textContent = "Velocidade " + velocidades[indice] + "×";
+  });
+}
+
+for (let i = 0; i < cartoesSom.length; i++) {
+  configurarPlayer(cartoesSom[i]);
+}
+
+const caixasVideo = document.querySelectorAll(".video-caixa");
+for (let i = 0; i < caixasVideo.length; i++) {
+  configurarVideo(caixasVideo[i]);
+}
+
+controleVolume.addEventListener("input", mudarVolume);
+mudarVolume();
+
+window.addEventListener("resize", ajustarCanvas);
+ajustarCanvas();
+desenharBarras();
