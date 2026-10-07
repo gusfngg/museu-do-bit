@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sobre · Museu do Bit</title>
+<meta name="description" content="Conheça o projeto, os bastidores técnicos, as perguntas frequentes e fale com o curador do museu.">
+<meta name="theme-color" content="#0f0d0a">
+<meta property="og:title" content="Sobre · Museu do Bit">
+<meta property="og:description" content="Conheça o projeto, os bastidores técnicos, as perguntas frequentes e fale com o curador do museu.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/sobre.js" defer></script>
+</head>
+<body data-pagina="sobre">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" id="progresso"></div>
+<header class="topo">
+  <div class="container topo__barra">
+    <a class="marca" href="index.html" aria-label="Museu do Bit, página inicial">
+      <img src="img/logo.svg" alt="" width="72" height="48">
+      <span>Museu do <b>Bit</b></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+        <a class="menu__link" href="index.html">Início</a>
+        <a class="menu__link" href="acervo.html">Acervo</a>
+        <a class="menu__link" href="linha-do-tempo.html">Linha do tempo</a>
+        <a class="menu__link" href="sala-multimidia.html">Sala multimídia</a>
+        <a class="menu__link" href="sobre.html">Sobre</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn-icone" href="acervo.html?favoritos=1" aria-label="Meus favoritos">♥<span class="badge" id="contFav" data-zero="true">0</span></a>
+      <button class="btn-icone" id="btnTema" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+      <button class="btn-icone" id="btnCrt" type="button" aria-pressed="false" aria-label="Alternar efeito CRT">▤</button>
+      <button class="hamburguer" id="btnMenu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="conteudo">
+<section class="pagina-topo">
+  <div class="container">
+    <span class="rotulo">Sala 07</span>
+    <h1>Sobre o museu</h1>
+    <p class="lead">Um projeto de Webdesign que quer provar que dá para contar história da tecnologia com HTML, CSS e JavaScript escritos à mão.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container sobre">
+    <div class="sobre__texto" data-revelar>
+      <h2>Por que um museu de bits?</h2>
+      <p>Antes dos smartphones havia máquinas que ocupavam uma mesa inteira, carregavam programas de fitas cassete e tinham menos memória que uma foto de hoje. Elas ensinaram milhões de pessoas a programar, a jogar e a imaginar.</p>
+      <p>O Museu do Bit reúne quinze delas, de 1975 a 1995, incluindo dois micros brasileiros do tempo da reserva de mercado. Cada peça tem ficha técnica, curiosidade e lugar na linha do tempo.</p>
+      <p>Todas as ilustrações, sons e vídeos foram criados para este projeto por scripts. Nada foi copiado de outros sites.</p>
+    </div>
+    <aside class="cartao-autor" data-revelar>
+      <img src="img/logo.svg" alt="Logotipo do Museu do Bit, a palavra BIT em pixels âmbar" width="72" height="48">
+      <h3>Curadoria</h3>
+      <p>Gustavo<br><span class="mono">Webdesign · Projeto da faculdade</span></p>
+      <a class="btn btn--fantasma btn--pequeno" href="#contato">Falar com o curador</a>
+    </aside>
+  </div>
+</section>
+
+<section class="secao secao--alt">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Bastidores</span>
+        <h2>Como o museu foi feito</h2>
+      </div>
+    </div>
+    <div class="bastidores">
+      <div class="bastidor" data-revelar><strong>HTML</strong><span>Semântico, com navegação por teclado, <code>dialog</code> nativo e <code>details</code> no FAQ.</span></div>
+      <div class="bastidor" data-revelar><strong>CSS</strong><span>Variáveis, grid, flexbox, tema claro/escuro, animações e três pontos de quebra responsivos.</span></div>
+      <div class="bastidor" data-revelar><strong>JavaScript</strong><span>Sem bibliotecas. Filtros, favoritos, modal, comparador, quiz, terminal, players e formulário.</span></div>
+      <div class="bastidor" data-revelar><strong>Mídia</strong><span>15 ilustrações em pixel art, 4 sons sintetizados e 2 vídeos gerados por algoritmo.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="secao" id="faq">
+  <div class="container faq-bloco">
+    <div>
+      <span class="rotulo">Dúvidas</span>
+      <h2>Perguntas frequentes</h2>
+      <p class="lead">Respostas rápidas sobre o museu e o que dá para fazer nele.</p>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>As máquinas existem de verdade?</summary>
+        <p>Todas existiram. As imagens, porém, são ilustrações em pixel art feitas para o projeto, simplificadas e sem pretensão de fidelidade absoluta.</p>
+      </details>
+      <details>
+        <summary>Como favorito uma peça?</summary>
+        <p>Clique no coração de qualquer cartão ou no botão dentro da ficha da peça. Seus favoritos ficam salvos no seu navegador e aparecem no filtro "Só favoritos".</p>
+      </details>
+      <details>
+        <summary>O que é o efeito CRT?</summary>
+        <p>Um filtro visual de linhas de varredura e cantos escurecidos, que imita os monitores de tubo. Ligue no botão do topo da página; sua escolha é lembrada.</p>
+      </details>
+      <details>
+        <summary>Posso comparar duas máquinas?</summary>
+        <p>Pode. No acervo, marque "Comparar" em duas peças e abra o comparador que aparece na parte de baixo da tela.</p>
+      </details>
+      <details>
+        <summary>Os dados técnicos são exatos?</summary>
+        <p>Foram conferidos com cuidado, mas alguns valores, como velocidade de clock e vendas, são aproximados e aparecem com "~". Para uso acadêmico, confirme em uma fonte primária.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--alt" id="contato">
+  <div class="container contato">
+    <div>
+      <span class="rotulo">Contato</span>
+      <h2>Fale com o curador</h2>
+      <p class="lead">Sugestão de peça, correção de ficha ou só um oi: a mensagem é validada aqui mesmo, no seu navegador.</p>
+    </div>
+
+    <div class="contato__caixa">
+      <form id="formContato" novalidate>
+        <div class="campo">
+          <label for="nome">Seu nome</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" aria-describedby="erro-nome" required>
+          <span class="campo__erro" id="erro-nome" role="alert"></span>
+        </div>
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" aria-describedby="erro-email" required>
+          <span class="campo__erro" id="erro-email" role="alert"></span>
+        </div>
+        <div class="campo">
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto" aria-describedby="erro-assunto" required>
+            <option value="">Selecione...</option>
+            <option>Sugerir uma peça</option>
+            <option>Corrigir uma informação</option>
+            <option>Elogio ou crítica</option>
+            <option>Outro assunto</option>
+          </select>
+          <span class="campo__erro" id="erro-assunto" role="alert"></span>
+        </div>
+        <div class="campo">
+          <label for="mensagem">Mensagem <span class="contador mono" id="contador">0/400</span></label>
+          <textarea id="mensagem" name="mensagem" rows="5" maxlength="400" aria-describedby="erro-mensagem" required></textarea>
+          <span class="campo__erro" id="erro-mensagem" role="alert"></span>
+        </div>
+        <div class="aceite">
+          <label><input id="aceite" name="aceite" type="checkbox" aria-describedby="erro-aceite"> Concordo em ser respondido por e-mail.</label>
+          <span class="campo__erro" id="erro-aceite" role="alert"></span>
+        </div>
+        <button class="btn" type="submit">Enviar mensagem</button>
+      </form>
+
+      <div class="sucesso" id="contatoSucesso" tabindex="-1" hidden>
+        <div class="sucesso__icone" aria-hidden="true">✓</div>
+        <h3>Mensagem recebida, <span id="nomeSucesso"></span>!</h3>
+        <p>Seu protocolo é <strong class="mono" id="protocolo"></strong>. Esta é uma simulação feita no navegador: nenhuma informação foi enviada.</p>
+        <button class="btn btn--fantasma" id="novaMensagem" type="button">Enviar outra mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><img src="img/logo.svg" alt="" width="72" height="48"><span>Museu do <b>Bit</b></span></a>
+        <p style="margin-top:1rem;max-width:42ch;color:var(--texto-2)">Um museu virtual dedicado aos computadores e consoles que moldaram a era digital, entre 1975 e 1995.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul><li><a href="index.html">Início</a></li><li><a href="acervo.html">Acervo</a></li><li><a href="linha-do-tempo.html">Linha do tempo</a></li><li><a href="sala-multimidia.html">Sala multimídia</a></li><li><a href="sobre.html">Sobre</a></li></ul>
+      </div>
+      <div>
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="sobre.html#contato">Fale com o curador</a></li>
+          <li><a href="sobre.html#faq">Perguntas frequentes</a></li>
+          <li><a href="acervo.html?favoritos=1">Meus favoritos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <span>© <span id="anoAtual">2026</span> Museu do Bit · Projeto de Webdesign</span>
+      <span>HTML + CSS + JavaScript puros</span>
+    </div>
+  </div>
+</footer>
+<button class="voltar-topo" id="voltarTopo" type="button" aria-label="Voltar ao topo">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
