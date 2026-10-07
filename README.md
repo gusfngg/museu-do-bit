@@ -8,7 +8,7 @@ Museu virtual de computadores e consoles clássicos (1975–1995), feito com **H
 
 Quinze máquinas, de Altair 8800 a PlayStation, incluindo dois micros brasileiros (TK 90X e Gradiente Expert). Cada peça tem ilustração em pixel art, ficha técnica e uma curiosidade. O visitante pode buscar, filtrar, favoritar, comparar, ouvir sons, ver vídeos e até digitar comandos num terminal.
 
-A identidade visual parte da luz âmbar dos monitores de fósforo: fundo quase preto, tipografia serifada de contraste (Fraunces), rótulos em monoespaçada (IBM Plex Mono) e cartões que imitam placas de museu sob um spot de luz.
+A identidade visual é um tributo ao **Windows 7 (Aero)**: branco e azul, barras de título de vidro translúcido com o botão vermelho de fechar, botões brilhantes, barra de tarefas no rodapé, janela de prompt de comando no terminal, barra de progresso verde, dica amarela de ferramenta e tipografia no estilo Segoe UI (Open Sans como alternativa na web). Há também um tema escuro em azul-marinho.
 
 ## Páginas
 
@@ -41,7 +41,7 @@ Todas se ligam pelo menu do topo, pelo rodapé e por links internos (por exemplo
 
 1. Menu hambúrguer responsivo com foco, `Esc` e link ativo
 2. Tema claro e escuro, lembrado entre visitas
-3. Efeito CRT (linhas de varredura) ligável no site inteiro
+3. Efeito CRT opcional (linhas de varredura) ligável no site inteiro
 4. Busca em tempo real, ignorando acentos
 5. Filtros por década, tipo e "feitos no Brasil", com ordenação
 6. Favoritos salvos no navegador, com contador no topo e filtro dedicado
@@ -58,7 +58,7 @@ Extras: barra de progresso de leitura, botão de voltar ao topo, avisos (toast),
 
 ## Estilizações
 
-Variáveis CSS · tema claro/escuro · `color-mix()` · gradientes cônicos (spot de luz) · gradientes radiais · padrão de pontos com máscara · `backdrop-filter` (vidro no cabeçalho) · cabeçalho `sticky` · CSS Grid · Flexbox · `clamp()` para tipografia fluida · `aspect-ratio` · animação de cursor piscando · faixa em loop infinito · transições com curva personalizada · `transform` em hover · sombras e brilho âmbar · menu hambúrguer que vira "X" · sublinhado animado no menu · revelar ao rolar com atraso escalonado · barra de progresso de leitura · modal com `::backdrop` desfocado · pulsação do coração ao favoritar · chips de filtro com estado `aria-pressed` · tabela estilizada · linha do tempo com `scroll-snap` · cartão ativo destacado na linha do tempo · estilização do `input[type=range]` com `accent-color` · visualizador em canvas · efeito CRT com `repeating-linear-gradient` · terminal com `text-shadow` fosforescente · acordeão com ícone que gira · mensagens de erro de formulário · foco visível personalizado · `::selection` · scrollbar estilizada · `prefers-reduced-motion` · três `@media` de responsividade.
+Variáveis CSS · tema claro e tema escuro azul-marinho · vidro Aero com `linear-gradient` em camadas · `backdrop-filter` · cabeçalho `sticky` · botões brilhantes azuis e cinzas com realce interno · barras de título de janela com botão vermelho (`::before` e `::after`) · papel de parede em gradientes radiais · padrão de bolhas em `radial-gradient` · CSS Grid · Flexbox · `clamp()` para tipografia fluida · títulos em peso leve com brilho branco · `aspect-ratio` · `color-mix()` · cursor piscando · faixa em loop infinito · transições com curva personalizada · cartões que flutuam e brilham no hover · sombras em camadas · menu hambúrguer que vira "X" · botão do menu com estado ativo estilo barra de tarefas · revelar ao rolar com atraso escalonado · barra de progresso de leitura · barra de progresso verde estilo Windows · modal com `::backdrop` desfocado · botão de play em esfera de vidro · chips de filtro com `aria-pressed` · terminal estilo prompt de comando · rodapé estilo barra de tarefas · dica amarela (toast) · linha do tempo com `scroll-snap` · cartão ativo destacado · `input[type=range]` com `accent-color` · visualizador em canvas · efeito CRT opcional · acordeão com ícone · mensagens de erro de formulário · foco visível · `::selection` azul · `prefers-reduced-motion` · três `@media` de responsividade.
 
 ## Como a mídia foi criada
 
