@@ -35,7 +35,7 @@ Todas se ligam pelo menu do topo, pelo rodapé e por links internos (por exemplo
 | Menu interativo | Menu hambúrguer animado que vira tela cheia no celular, com link da página atual destacado |
 | 30 commits | Histórico no GitHub |
 | README | Este arquivo |
-| Deploy | GitHub Pages |
+| Deploy | Vercel (site estático, sem etapa de build) |
 
 ## Funcionalidades
 
