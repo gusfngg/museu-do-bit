@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sala multimídia · Museu do Bit</title>
+<meta name="description" content="Players de áudio com visualizador e vídeos com efeito CRT: sons sintetizados e vídeos gerados por algoritmo.">
+<meta name="theme-color" content="#0f0d0a">
+<meta property="og:title" content="Sala multimídia · Museu do Bit">
+<meta property="og:description" content="Players de áudio com visualizador e vídeos com efeito CRT: sons sintetizados e vídeos gerados por algoritmo.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/midia.js" defer></script>
+</head>
+<body data-pagina="multimidia">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" id="progresso"></div>
+<header class="topo">
+  <div class="container topo__barra">
+    <a class="marca" href="index.html" aria-label="Museu do Bit, página inicial">
+      <img src="img/logo.svg" alt="" width="72" height="48">
+      <span>Museu do <b>Bit</b></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+        <a class="menu__link" href="index.html">Início</a>
+        <a class="menu__link" href="acervo.html">Acervo</a>
+        <a class="menu__link" href="linha-do-tempo.html">Linha do tempo</a>
+        <a class="menu__link" href="sala-multimidia.html">Sala multimídia</a>
+        <a class="menu__link" href="sobre.html">Sobre</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn-icone" href="acervo.html?favoritos=1" aria-label="Meus favoritos">♥<span class="badge" id="contFav" data-zero="true">0</span></a>
+      <button class="btn-icone" id="btnTema" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+      <button class="btn-icone" id="btnCrt" type="button" aria-pressed="false" aria-label="Alternar efeito CRT">▤</button>
+      <button class="hamburguer" id="btnMenu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="conteudo">
+<section class="pagina-topo">
+  <div class="container">
+    <span class="rotulo">Sala 06</span>
+    <h1>Sala multimídia</h1>
+    <p class="lead">Ligue o som. Todos os áudios e vídeos desta sala foram sintetizados e gerados para o museu, sem copiar nada de ninguém.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Sala de áudio</span>
+        <h2>Ouça as máquinas</h2>
+      </div>
+      <div class="volume">
+        <label for="volume" class="mono">Volume</label>
+        <input id="volume" type="range" min="0" max="100" value="70">
+        <output id="volumeSaida" for="volume" class="mono">70%</output>
+      </div>
+    </div>
+
+    <div class="visualizador" data-revelar>
+      <canvas id="visualizador" aria-label="Visualizador de frequências do áudio em reprodução" role="img"></canvas>
+    </div>
+
+    <div class="sons">
+      <article class="som" data-titulo="Boot de PC" data-revelar>
+        <button class="som__tocar" type="button" aria-label="Tocar Boot de PC">▶</button>
+        <div class="som__corpo">
+          <h3>Boot de PC</h3>
+          <p>O bip da BIOS, o ronco do disquete e o acorde de boas-vindas.</p>
+          <input class="som__prog" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posição de Boot de PC">
+          <span class="som__tempo mono">0:00 / 0:03</span>
+        </div>
+        <audio preload="metadata" src="audio/boot-pc.mp3"></audio>
+      </article>
+
+      <article class="som" data-titulo="Chiptune 8 bits" data-revelar>
+        <button class="som__tocar" type="button" aria-label="Tocar Chiptune 8 bits">▶</button>
+        <div class="som__corpo">
+          <h3>Chiptune 8 bits</h3>
+          <p>Arpejos de onda de pulso sobre um baixo triangular, como nos consoles.</p>
+          <input class="som__prog" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posição de Chiptune 8 bits">
+          <span class="som__tempo mono">0:00 / 0:05</span>
+        </div>
+        <audio preload="metadata" src="audio/chiptune-8bit.mp3"></audio>
+      </article>
+
+      <article class="som" data-titulo="Modem discado" data-revelar>
+        <button class="som__tocar" type="button" aria-label="Tocar Modem discado">▶</button>
+        <div class="som__corpo">
+          <h3>Modem discado</h3>
+          <p>A sinfonia de tons e chiados de uma conexão com a internet, em 1995.</p>
+          <input class="som__prog" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posição de Modem discado">
+          <span class="som__tempo mono">0:00 / 0:05</span>
+        </div>
+        <audio preload="metadata" src="audio/modem-discado.mp3"></audio>
+      </article>
+
+      <article class="som" data-titulo="Melodia SID" data-revelar>
+        <button class="som__tocar" type="button" aria-label="Tocar Melodia SID">▶</button>
+        <div class="som__corpo">
+          <h3>Melodia SID</h3>
+          <p>Dente de serra com vibrato, ao jeito do chip de som do Commodore 64.</p>
+          <input class="som__prog" type="range" min="0" max="100" value="0" step="0.1" aria-label="Posição de Melodia SID">
+          <span class="som__tempo mono">0:00 / 0:04</span>
+        </div>
+        <audio preload="metadata" src="audio/sid-melodia.mp3"></audio>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--alt">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Sala de vídeo</span>
+        <h2>Telas que não dormem</h2>
+      </div>
+      <p class="lead" style="margin:0">Dois vídeos gerados por algoritmo. Ligue o efeito CRT e mude a velocidade.</p>
+    </div>
+
+    <div class="videos">
+      <figure class="video-caixa" data-revelar>
+        <div class="video-caixa__tela">
+          <video controls preload="metadata" playsinline loop poster="img/poster-vida.jpg" aria-describedby="legVida">
+            <source src="video/vida-fosforo.mp4" type="video/mp4">
+            Seu navegador não reproduz vídeo.
+          </video>
+        </div>
+        <figcaption id="legVida">
+          <h3>Vida de fósforo</h3>
+          <p>O Jogo da Vida de Conway: células que nascem e morrem seguindo apenas quatro regras.</p>
+          <div class="video__acoes">
+            <button class="chip-btn video__crt" type="button" aria-pressed="false">Efeito CRT</button>
+            <button class="chip-btn video__vel" type="button">Velocidade 1×</button>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="video-caixa" data-revelar>
+        <div class="video-caixa__tela">
+          <video controls preload="metadata" playsinline loop poster="img/poster-automato.jpg" aria-describedby="legAuto">
+            <source src="video/automato-90.mp4" type="video/mp4">
+            Seu navegador não reproduz vídeo.
+          </video>
+        </div>
+        <figcaption id="legAuto">
+          <h3>Autômato 90</h3>
+          <p>Um autômato celular elementar que desenha triângulos de Sierpinski a partir de uma regra simples.</p>
+          <div class="video__acoes">
+            <button class="chip-btn video__crt" type="button" aria-pressed="false">Efeito CRT</button>
+            <button class="chip-btn video__vel" type="button">Velocidade 1×</button>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><img src="img/logo.svg" alt="" width="72" height="48"><span>Museu do <b>Bit</b></span></a>
+        <p style="margin-top:1rem;max-width:42ch;color:var(--texto-2)">Um museu virtual dedicado aos computadores e consoles que moldaram a era digital, entre 1975 e 1995.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul><li><a href="index.html">Início</a></li><li><a href="acervo.html">Acervo</a></li><li><a href="linha-do-tempo.html">Linha do tempo</a></li><li><a href="sala-multimidia.html">Sala multimídia</a></li><li><a href="sobre.html">Sobre</a></li></ul>
+      </div>
+      <div>
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="sobre.html#contato">Fale com o curador</a></li>
+          <li><a href="sobre.html#faq">Perguntas frequentes</a></li>
+          <li><a href="acervo.html?favoritos=1">Meus favoritos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <span>© <span id="anoAtual">2026</span> Museu do Bit · Projeto de Webdesign</span>
+      <span>HTML + CSS + JavaScript puros</span>
+    </div>
+  </div>
+</footer>
+<button class="voltar-topo" id="voltarTopo" type="button" aria-label="Voltar ao topo">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
