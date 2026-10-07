@@ -14,7 +14,7 @@
     vistos.add(e.ano);
     const peca = e.maquina ? pecaPorId(e.maquina) : null;
     return `
-      <li class="evento ${i % 2 ? "evento--baixo" : ""}" id="${id}" data-ano="${e.ano}">
+      <li class="evento" id="${id}" data-ano="${e.ano}">
         <span class="evento__ponto" aria-hidden="true"></span>
         <div class="evento__cartao">
           <span class="evento__ano">${e.ano}</span>
