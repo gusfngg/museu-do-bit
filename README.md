@@ -2,7 +2,7 @@
 
 Museu virtual de computadores e consoles clássicos (1975–1995), feito com **HTML, CSS e JavaScript puros**, sem frameworks nem bibliotecas. Projeto da disciplina de Webdesign.
 
-**Site publicado:** _(link do deploy)_
+**Site publicado:** https://museu-do-bit.vercel.app
 
 ## O que é
 
