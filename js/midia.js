@@ -53,7 +53,7 @@
   const desenhar = () => {
     const w = tela.width;
     const h = tela.height;
-    const cor = getComputedStyle(document.documentElement).getPropertyValue("--ambar").trim() || "#ffb000";
+    const cor = getComputedStyle(document.documentElement).getPropertyValue("--ciano").trim() || "#2bb3e8";
     ctx2d.clearRect(0, 0, w, h);
     const barras = 32;
     const larg = w / barras;

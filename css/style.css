@@ -1,40 +1,47 @@
 :root {
-  --bg: #0f0d0a;
-  --bg-2: #17140f;
-  --bg-3: #211c14;
-  --linha: #3a3226;
-  --texto: #f1e8d3;
-  --texto-2: #b9ad93;
-  --ambar: #ffb000;
-  --ambar-2: #ff7a1a;
-  --rosa: #ff4fd8;
-  --verde: #7cff8a;
-  --sobre-ambar: #14100a;
-  --raio: 14px;
-  --raio-g: 22px;
-  --sombra: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
-  --brilho: 0 0 24px rgba(255, 176, 0, 0.35);
-  --f-display: "Fraunces", Georgia, serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --f-corpo: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --bg: #eef4fb;
+  --bg-2: #ffffff;
+  --bg-3: #e3edf9;
+  --linha: #a9c4e4;
+  --texto: #1c2b3d;
+  --texto-2: #4b6179;
+  --titulo: #14406f;
+  --azul: #1b6ad0;
+  --azul-2: #0a4aa8;
+  --ciano: #2bb3e8;
+  --verde: #2e9d3a;
+  --sobre-azul: #ffffff;
+  --raio: 6px;
+  --raio-g: 8px;
+  --sombra: 0 2px 10px rgba(22, 64, 120, 0.25);
+  --brilho: 0 0 14px rgba(70, 150, 235, 0.55);
+  --vidro: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(214, 231, 250, 0.82) 48%, rgba(190, 215, 244, 0.86) 52%, rgba(226, 238, 252, 0.9) 100%);
+  --botao: linear-gradient(180deg, #7bbcff 0%, #3b8cea 48%, #1566cc 52%, #3b97f2 100%);
+  --botao-2: linear-gradient(180deg, #ffffff 0%, #f1f4f8 48%, #dde3ea 52%, #ced6df 100%);
+  --f-display: "Segoe UI", "Open Sans", Tahoma, Geneva, sans-serif;
+  --f-mono: Consolas, "Lucida Console", Inconsolata, monospace;
+  --f-corpo: "Segoe UI", "Open Sans", Tahoma, Geneva, sans-serif;
   --topo-h: 68px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-[data-tema="claro"] {
-  --bg: #f4ecd8;
-  --bg-2: #ebe1c8;
-  --bg-3: #e0d4b6;
-  --linha: #c9b98f;
-  --texto: #1b1710;
-  --texto-2: #5b5139;
-  --ambar: #a85d00;
-  --ambar-2: #c2410c;
-  --rosa: #b8179b;
-  --verde: #166534;
-  --sobre-ambar: #fff7e6;
-  --sombra: 0 18px 40px -20px rgba(60, 40, 0, 0.35);
-  --brilho: 0 0 0 rgba(0, 0, 0, 0);
+[data-tema="escuro"] {
+  --bg: #0a1d38;
+  --bg-2: #102a4d;
+  --bg-3: #173a68;
+  --linha: #2f5a92;
+  --texto: #e8f2ff;
+  --texto-2: #a7c1e0;
+  --titulo: #bfe0ff;
+  --azul: #5db4ff;
+  --azul-2: #8fcbff;
+  --ciano: #4fd0ff;
+  --verde: #6fdc7c;
+  --sobre-azul: #06182e;
+  --sombra: 0 2px 14px rgba(0, 0, 0, 0.55);
+  --brilho: 0 0 16px rgba(93, 180, 255, 0.45);
+  --vidro: linear-gradient(180deg, rgba(40, 80, 130, 0.9) 0%, rgba(20, 52, 96, 0.88) 48%, rgba(12, 40, 80, 0.9) 52%, rgba(24, 60, 108, 0.92) 100%);
+  --botao-2: linear-gradient(180deg, #4a74a8 0%, #355d92 48%, #284c80 52%, #3a6296 100%);
 }
 
 *,
@@ -100,23 +107,23 @@ p {
 }
 
 a {
-  color: var(--ambar);
+  color: var(--azul);
   text-underline-offset: 3px;
 }
 
 a:hover {
-  color: var(--ambar-2);
+  color: var(--azul-2);
 }
 
 :focus-visible {
-  outline: 3px solid var(--ambar);
+  outline: 3px solid var(--azul);
   outline-offset: 3px;
   border-radius: 6px;
 }
 
 ::selection {
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
 }
 
 .container {
@@ -148,8 +155,8 @@ a:hover {
   left: 1rem;
   z-index: 200;
   padding: 0.7rem 1rem;
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
   font-weight: 700;
   border-radius: 8px;
   transition: top 0.2s;
@@ -167,7 +174,7 @@ a:hover {
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ambar);
+  color: var(--azul);
   margin-bottom: 1rem;
 }
 
@@ -175,7 +182,7 @@ a:hover {
   content: "";
   width: 28px;
   height: 2px;
-  background: var(--ambar);
+  background: var(--azul);
 }
 
 .lead {
@@ -193,7 +200,7 @@ a:hover {
   inset: 0 0 auto 0;
   height: 3px;
   z-index: 120;
-  background: linear-gradient(90deg, var(--ambar), var(--rosa));
+  background: linear-gradient(90deg, var(--azul), var(--ciano));
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -236,7 +243,7 @@ a:hover {
 }
 
 .marca b {
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .menu {
@@ -263,7 +270,7 @@ a:hover {
   right: 0.9rem;
   bottom: 0.25rem;
   height: 2px;
-  background: var(--ambar);
+  background: var(--azul);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s var(--ease);
@@ -302,16 +309,16 @@ a:hover {
 }
 
 .btn-icone:hover {
-  border-color: var(--ambar);
+  border-color: var(--azul);
   background: var(--bg-3);
   color: var(--texto);
   transform: translateY(-2px);
 }
 
 .btn-icone[aria-pressed="true"] {
-  background: var(--ambar);
-  color: var(--sobre-ambar);
-  border-color: var(--ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
+  border-color: var(--azul);
 }
 
 .badge {
@@ -323,7 +330,7 @@ a:hover {
   padding: 0 5px;
   display: grid;
   place-items: center;
-  background: var(--rosa);
+  background: var(--ciano);
   color: #fff;
   font-family: var(--f-mono);
   font-size: 0.7rem;
@@ -392,9 +399,9 @@ a:hover {
   font-family: var(--f-corpo);
   font-size: 1rem;
   font-weight: 600;
-  color: var(--sobre-ambar);
-  background: var(--ambar);
-  border: 2px solid var(--ambar);
+  color: var(--sobre-azul);
+  background: var(--azul);
+  border: 2px solid var(--azul);
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
@@ -402,9 +409,9 @@ a:hover {
 }
 
 .btn:hover {
-  color: var(--sobre-ambar);
+  color: var(--sobre-azul);
   transform: translateY(-3px);
-  box-shadow: var(--brilho), 0 10px 24px -10px var(--ambar);
+  box-shadow: var(--brilho), 0 10px 24px -10px var(--azul);
 }
 
 .btn:active {
@@ -418,8 +425,8 @@ a:hover {
 }
 
 .btn--fantasma:hover {
-  color: var(--ambar);
-  border-color: var(--ambar);
+  color: var(--azul);
+  border-color: var(--azul);
   box-shadow: none;
 }
 
@@ -447,7 +454,7 @@ a:hover {
   font-size: 0.78rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ambar);
+  color: var(--azul);
   margin-bottom: 1rem;
 }
 
@@ -465,7 +472,7 @@ a:hover {
 }
 
 .rodape a:hover {
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .rodape__fim {
@@ -490,8 +497,8 @@ a:hover {
   height: 48px;
   display: grid;
   place-items: center;
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
   border: 0;
   border-radius: 50%;
   font-size: 1.3rem;
@@ -536,8 +543,8 @@ a:hover {
   overflow: hidden;
   padding-block: clamp(3rem, 7vw, 6rem) clamp(2.5rem, 5vw, 4rem);
   background:
-    radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--ambar) 22%, transparent), transparent 70%),
-    radial-gradient(40% 50% at 0% 100%, color-mix(in srgb, var(--rosa) 12%, transparent), transparent 70%),
+    radial-gradient(60% 70% at 85% 20%, color-mix(in srgb, var(--azul) 22%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 0% 100%, color-mix(in srgb, var(--ciano) 12%, transparent), transparent 70%),
     var(--bg);
 }
 
@@ -563,7 +570,7 @@ a:hover {
 
 .hero h1 em {
   font-style: normal;
-  color: var(--ambar);
+  color: var(--azul);
   text-shadow: var(--brilho);
 }
 
@@ -572,7 +579,7 @@ a:hover {
   width: 0.5em;
   height: 0.12em;
   margin-left: 0.08em;
-  background: var(--ambar);
+  background: var(--azul);
   vertical-align: baseline;
   animation: piscar 1.05s steps(1) infinite;
 }
@@ -619,8 +626,8 @@ a:hover {
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
   border-radius: 6px;
 }
 
@@ -646,7 +653,7 @@ a:hover {
 .faixa__trilho span::after {
   content: "✦";
   margin-left: 3rem;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .faixa:hover .faixa__trilho {
@@ -681,7 +688,7 @@ a:hover {
   font-size: clamp(2.2rem, 1.4rem + 3vw, 3.8rem);
   font-weight: 900;
   line-height: 1;
-  color: var(--ambar);
+  color: var(--azul);
   font-variant-numeric: tabular-nums;
 }
 
@@ -726,7 +733,7 @@ a:hover {
 .peca:hover,
 .peca:focus-within {
   transform: translateY(-6px);
-  border-color: var(--ambar);
+  border-color: var(--azul);
   box-shadow: var(--sombra), var(--brilho);
 }
 
@@ -750,7 +757,7 @@ a:hover {
   display: grid;
   place-items: center;
   background:
-    conic-gradient(from 180deg at 50% -10%, transparent 38%, color-mix(in srgb, var(--ambar) 20%, transparent) 50%, transparent 62%),
+    conic-gradient(from 180deg at 50% -10%, transparent 38%, color-mix(in srgb, var(--azul) 20%, transparent) 50%, transparent 62%),
     radial-gradient(80% 60% at 50% 100%, var(--bg-3), var(--bg-2));
   border-bottom: 1px solid var(--linha);
 }
@@ -775,7 +782,7 @@ a:hover {
   font-family: var(--f-mono);
   font-size: 0.72rem;
   letter-spacing: 0.18em;
-  color: var(--ambar);
+  color: var(--azul);
   margin-bottom: 0.3rem;
 }
 
@@ -810,13 +817,13 @@ a:hover {
 
 .peca__fav:hover {
   transform: scale(1.12);
-  color: var(--rosa);
+  color: var(--ciano);
 }
 
 .peca__fav[aria-pressed="true"] {
   color: #fff;
-  background: var(--rosa);
-  border-color: var(--rosa);
+  background: var(--ciano);
+  border-color: var(--ciano);
   animation: pulso 0.4s var(--ease);
 }
 
@@ -836,7 +843,7 @@ a:hover {
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--sobre-ambar);
+  color: var(--sobre-azul);
   background: var(--verde);
   border-radius: 6px;
 }
@@ -854,7 +861,7 @@ a:hover {
 }
 
 .peca__comparar input {
-  accent-color: var(--ambar);
+  accent-color: var(--azul);
   width: 16px;
   height: 16px;
 }
@@ -932,8 +939,8 @@ a:hover {
 
 .modal__fechar:hover {
   transform: rotate(90deg);
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
 }
 
 .modal__palco {
@@ -941,7 +948,7 @@ a:hover {
   place-items: center;
   padding: 2rem;
   background:
-    conic-gradient(from 180deg at 50% -10%, transparent 36%, color-mix(in srgb, var(--ambar) 24%, transparent) 50%, transparent 64%),
+    conic-gradient(from 180deg at 50% -10%, transparent 36%, color-mix(in srgb, var(--azul) 24%, transparent) 50%, transparent 64%),
     radial-gradient(90% 70% at 50% 100%, var(--bg-3), var(--bg-2));
   border-right: 1px solid var(--linha);
 }
@@ -982,7 +989,7 @@ a:hover {
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .ficha dd {
@@ -994,14 +1001,14 @@ a:hover {
   margin: 0 0 1.25rem;
   padding: 0.9rem 1.1rem;
   background: var(--bg-3);
-  border-left: 3px solid var(--ambar);
+  border-left: 3px solid var(--azul);
   border-radius: 0 12px 12px 0;
   font-size: 0.95rem;
   color: var(--texto-2);
 }
 
 .curio b {
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .modal__acoes,
@@ -1137,7 +1144,7 @@ a:hover {
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .quiz__barra {
@@ -1151,7 +1158,7 @@ a:hover {
 .quiz__barra span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--ambar), var(--rosa));
+  background: linear-gradient(90deg, var(--azul), var(--ciano));
   transition: width 0.5s var(--ease);
 }
 
@@ -1175,7 +1182,7 @@ a:hover {
 
 .quiz__opcao:hover {
   transform: translateX(6px);
-  border-color: var(--ambar);
+  border-color: var(--azul);
   background: var(--bg-3);
 }
 
@@ -1209,7 +1216,7 @@ a:hover {
 
 .crt main,
 .crt .topo {
-  text-shadow: 0 0 6px color-mix(in srgb, var(--ambar) 40%, transparent);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--azul) 40%, transparent);
 }
 
 @keyframes tremer {
@@ -1220,7 +1227,7 @@ a:hover {
 
 .pagina-topo {
   padding-block: clamp(2.5rem, 6vw, 5rem) 1rem;
-  background: radial-gradient(50% 90% at 90% 0%, color-mix(in srgb, var(--ambar) 16%, transparent), transparent 70%);
+  background: radial-gradient(50% 90% at 90% 0%, color-mix(in srgb, var(--azul) 16%, transparent), transparent 70%);
 }
 
 .pagina-topo h1 {
@@ -1247,7 +1254,7 @@ a:hover {
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .campo input,
@@ -1274,8 +1281,8 @@ a:hover {
 .campo select:focus,
 .campo textarea:focus {
   outline: none;
-  border-color: var(--ambar);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ambar) 22%, transparent);
+  border-color: var(--azul);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--azul) 22%, transparent);
 }
 
 .filtros__chips {
@@ -1298,14 +1305,14 @@ a:hover {
 }
 
 .chip-btn:hover {
-  border-color: var(--ambar);
+  border-color: var(--azul);
   transform: translateY(-2px);
 }
 
 .chip-btn[aria-pressed="true"] {
-  background: var(--ambar);
-  border-color: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  border-color: var(--azul);
+  color: var(--sobre-azul);
   font-weight: 600;
 }
 
@@ -1349,7 +1356,7 @@ a:hover {
   padding-block: 0.85rem;
   background: color-mix(in srgb, var(--bg-2) 92%, transparent);
   backdrop-filter: blur(14px);
-  border-top: 2px solid var(--ambar);
+  border-top: 2px solid var(--azul);
   box-shadow: 0 -20px 40px -20px rgba(0, 0, 0, 0.6);
   animation: sobe 0.5s var(--ease);
 }
@@ -1439,7 +1446,7 @@ a:hover {
   text-align: center;
   font-family: var(--f-display);
   font-size: 1.15rem;
-  border-bottom: 2px solid var(--ambar);
+  border-bottom: 2px solid var(--azul);
 }
 
 .tabela thead th img {
@@ -1453,7 +1460,7 @@ a:hover {
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .tabela tbody tr:hover {
@@ -1476,7 +1483,7 @@ a:hover {
 
 .era:hover {
   transform: translateY(-6px) rotate(-0.6deg);
-  border-color: var(--ambar);
+  border-color: var(--azul);
 }
 
 .era img {
@@ -1495,7 +1502,7 @@ a:hover {
   font-family: var(--f-mono);
   font-size: 0.75rem;
   letter-spacing: 0.16em;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .era__texto h3 {
@@ -1529,7 +1536,7 @@ a:hover {
 .controle-ano input[type="range"] {
   flex: 1;
   height: 6px;
-  accent-color: var(--ambar);
+  accent-color: var(--azul);
   cursor: pointer;
 }
 
@@ -1538,7 +1545,7 @@ a:hover {
   font-family: var(--f-display);
   font-size: 2rem;
   font-weight: 900;
-  color: var(--ambar);
+  color: var(--azul);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1553,7 +1560,7 @@ a:hover {
 .linha__progresso span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--ambar), var(--rosa));
+  background: linear-gradient(90deg, var(--azul), var(--ciano));
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -1568,7 +1575,7 @@ a:hover {
   overflow-x: auto;
   scroll-snap-type: x proximity;
   scrollbar-width: thin;
-  scrollbar-color: var(--ambar) var(--bg-3);
+  scrollbar-color: var(--azul) var(--bg-3);
   cursor: grab;
 }
 
@@ -1585,7 +1592,7 @@ a:hover {
   right: 0;
   top: 42px;
   height: 2px;
-  background: repeating-linear-gradient(90deg, var(--ambar) 0 10px, transparent 10px 18px);
+  background: repeating-linear-gradient(90deg, var(--azul) 0 10px, transparent 10px 18px);
   opacity: 0.45;
 }
 
@@ -1604,7 +1611,7 @@ a:hover {
   width: 18px;
   height: 18px;
   background: var(--bg);
-  border: 3px solid var(--ambar);
+  border: 3px solid var(--azul);
   border-radius: 50%;
   transform: translateX(-50%);
   top: -23px;
@@ -1626,14 +1633,14 @@ a:hover {
 .evento--ativo .evento__cartao {
   opacity: 1;
   transform: scale(1);
-  border-color: var(--ambar);
+  border-color: var(--azul);
   box-shadow: var(--sombra), var(--brilho);
 }
 
 .evento--ativo .evento__ponto {
-  background: var(--ambar);
+  background: var(--azul);
   transform: translateX(-50%) scale(1.4);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--ambar) 25%, transparent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--azul) 25%, transparent);
 }
 
 .evento__ano {
@@ -1642,7 +1649,7 @@ a:hover {
   font-size: 2.6rem;
   font-weight: 900;
   line-height: 1;
-  color: var(--ambar);
+  color: var(--azul);
   margin-bottom: 0.4rem;
 }
 
@@ -1665,7 +1672,7 @@ a:hover {
 
 .volume input {
   width: 160px;
-  accent-color: var(--ambar);
+  accent-color: var(--azul);
 }
 
 .visualizador {
@@ -1700,7 +1707,7 @@ a:hover {
 }
 
 .som--ativo {
-  border-color: var(--ambar);
+  border-color: var(--azul);
   box-shadow: var(--brilho);
   transform: translateY(-3px);
 }
@@ -1712,8 +1719,8 @@ a:hover {
   display: grid;
   place-items: center;
   padding: 0 0 0 3px;
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
   border: 0;
   border-radius: 50%;
   font-size: 1.15rem;
@@ -1748,7 +1755,7 @@ a:hover {
 
 .som__prog {
   width: 100%;
-  accent-color: var(--ambar);
+  accent-color: var(--azul);
   cursor: pointer;
 }
 
@@ -1883,13 +1890,13 @@ a:hover {
 
 .bastidor:hover {
   transform: translateY(-5px);
-  border-color: var(--ambar);
+  border-color: var(--azul);
 }
 
 .bastidor strong {
   font-family: var(--f-display);
   font-size: 1.6rem;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .bastidor code {
@@ -1940,21 +1947,21 @@ a:hover {
   height: 32px;
   font-family: var(--f-mono);
   font-size: 1.2rem;
-  color: var(--ambar);
+  color: var(--azul);
   border: 1px solid var(--linha);
   border-radius: 50%;
   transition: transform 0.35s var(--ease), background 0.2s, color 0.2s;
 }
 
 .faq summary:hover {
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .faq details[open] summary::after {
   content: "−";
   transform: rotate(180deg);
-  background: var(--ambar);
-  color: var(--sobre-ambar);
+  background: var(--azul);
+  color: var(--sobre-azul);
 }
 
 .faq details p {
@@ -1994,17 +2001,17 @@ a:hover {
 .campo__erro {
   min-height: 1.2em;
   font-size: 0.82rem;
-  color: #ff7b72;
+  color: #b42318;
 }
 
-[data-tema="claro"] .campo__erro {
-  color: #b42318;
+[data-tema="escuro"] .campo__erro {
+  color: #ff8a80;
 }
 
 .campo--erro input,
 .campo--erro select,
 .campo--erro textarea {
-  border-color: #ff7b72;
+  border-color: #d93025;
 }
 
 .contador {
@@ -2015,7 +2022,7 @@ a:hover {
 }
 
 .contador--alerta {
-  color: var(--rosa);
+  color: var(--ciano);
 }
 
 .aceite label {
@@ -2029,7 +2036,7 @@ a:hover {
 .aceite input {
   width: 18px;
   height: 18px;
-  accent-color: var(--ambar);
+  accent-color: var(--azul);
 }
 
 .sucesso {
@@ -2050,7 +2057,7 @@ a:hover {
   height: 64px;
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--sobre-ambar);
+  color: var(--sobre-azul);
   background: var(--verde);
   border-radius: 50%;
   box-shadow: 0 0 0 8px color-mix(in srgb, var(--verde) 22%, transparent);
@@ -2289,7 +2296,7 @@ a:hover {
 
 .erro404 em {
   font-style: normal;
-  color: var(--ambar);
+  color: var(--azul);
 }
 
 .erro404__arte {

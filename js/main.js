@@ -66,16 +66,16 @@ const Bit = (() => {
 
   const aplicarTema = (tema) => {
     document.documentElement.dataset.tema = tema;
-    guardar.gravar("bit-tema", tema);
+    guardar.gravar("bit-tema-aero", tema);
   };
 
   const iniciarTema = () => {
-    const salvo = guardar.ler("bit-tema", null);
-    aplicarTema(salvo || "escuro");
+    const salvo = guardar.ler("bit-tema-aero", null);
+    aplicarTema(salvo || "claro");
     const botao = $("#btnTema");
     if (botao)
       botao.addEventListener("click", () => {
-        const novo = document.documentElement.dataset.tema === "claro" ? "escuro" : "claro";
+        const novo = document.documentElement.dataset.tema === "escuro" ? "claro" : "escuro";
         aplicarTema(novo);
         toast(`Tema ${novo}`);
       });
