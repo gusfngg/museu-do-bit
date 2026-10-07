@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Início · Museu do Bit</title>
+<meta name="description" content="Museu virtual de computadores e consoles clássicos, de 1975 a 1995: acervo, linha do tempo, sons e vídeos.">
+<meta name="theme-color" content="#0f0d0a">
+<meta property="og:title" content="Início · Museu do Bit">
+<meta property="og:description" content="Museu virtual de computadores e consoles clássicos, de 1975 a 1995: acervo, linha do tempo, sons e vídeos.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/home.js" defer></script>
+</head>
+<body data-pagina="home">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" id="progresso"></div>
+<header class="topo">
+  <div class="container topo__barra">
+    <a class="marca" href="index.html" aria-label="Museu do Bit, página inicial">
+      <img src="img/logo.svg" alt="" width="72" height="48">
+      <span>Museu do <b>Bit</b></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+        <a class="menu__link" href="index.html">Início</a>
+        <a class="menu__link" href="acervo.html">Acervo</a>
+        <a class="menu__link" href="linha-do-tempo.html">Linha do tempo</a>
+        <a class="menu__link" href="sala-multimidia.html">Sala multimídia</a>
+        <a class="menu__link" href="sobre.html">Sobre</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn-icone" href="acervo.html?favoritos=1" aria-label="Meus favoritos">♥<span class="badge" id="contFav" data-zero="true">0</span></a>
+      <button class="btn-icone" id="btnTema" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+      <button class="btn-icone" id="btnCrt" type="button" aria-pressed="false" aria-label="Alternar efeito CRT">▤</button>
+      <button class="hamburguer" id="btnMenu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="conteudo">
+<section class="hero">
+  <div class="container hero__grade">
+    <div>
+      <span class="rotulo">Acervo digital · 1975–1995</span>
+      <h1>Museu do <em>Bit</em><span class="cursor" aria-hidden="true"></span></h1>
+      <p class="lead">Quinze máquinas que ensinaram o mundo a conversar com computadores: das chaves do Altair às texturas do PlayStation. Entre, aperte as teclas e escute o som dos modems.</p>
+      <div class="hero__acoes">
+        <a class="btn" href="acervo.html">Visitar o acervo</a>
+        <a class="btn btn--fantasma" href="linha-do-tempo.html">Ver a linha do tempo</a>
+      </div>
+    </div>
+    <figure class="hero__arte" style="margin:0">
+      <img src="img/hero-crt.svg" alt="Monitor de fósforo âmbar exibindo linhas de texto e um cursor piscando" width="640" height="400">
+      <figcaption class="hero__selo">Sala 01 · Boas-vindas</figcaption>
+    </figure>
+  </div>
+</section>
+
+<div class="faixa" aria-hidden="true">
+  <div class="faixa__trilho">
+    <span>Altair 8800 · 1975</span><span>Apple II · 1977</span><span>Atari 2600 · 1977</span><span>IBM PC · 1981</span><span>Commodore 64 · 1982</span><span>Macintosh · 1984</span><span>NES · 1985</span><span>Amiga 500 · 1987</span><span>Game Boy · 1989</span><span>PlayStation · 1994</span>
+    <span>Altair 8800 · 1975</span><span>Apple II · 1977</span><span>Atari 2600 · 1977</span><span>IBM PC · 1981</span><span>Commodore 64 · 1982</span><span>Macintosh · 1984</span><span>NES · 1985</span><span>Amiga 500 · 1987</span><span>Game Boy · 1989</span><span>PlayStation · 1994</span>
+  </div>
+</div>
+
+<section class="secao">
+  <div class="container">
+    <div class="numeros" data-revelar>
+      <div class="numero"><strong data-contar="15">0</strong><span>Máquinas no acervo</span></div>
+      <div class="numero"><strong data-contar="20">0</strong><span>Anos de história</span></div>
+      <div class="numero"><strong data-contar="11">0</strong><span>Fabricantes</span></div>
+      <div class="numero"><strong data-contar="2">0</strong><span>Micros brasileiros</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--alt">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Hoje na vitrine</span>
+        <h2>Peças em destaque</h2>
+      </div>
+      <a class="btn btn--fantasma" href="acervo.html">Ver o acervo completo →</a>
+    </div>
+    <div class="grade-pecas" id="destaques"></div>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Para os curiosos</span>
+        <h2>Terminal do curador</h2>
+      </div>
+      <p class="lead" style="margin:0">Digite <code class="mono">help</code> e descubra o que dá para fazer. Tente <code class="mono">boot</code>.</p>
+    </div>
+    <div class="terminal" id="terminal" data-revelar>
+      <div class="terminal__barra"><span></span><span></span><span></span><b>curador@museu-do-bit:~</b></div>
+      <div class="terminal__saida" id="termSaida" role="log" aria-live="polite"></div>
+      <form class="terminal__linha" id="termForm">
+        <label for="termEntrada" class="terminal__prompt">$</label>
+        <input id="termEntrada" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Digite um comando do terminal">
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--alt" id="quiz">
+  <div class="container quiz">
+    <div class="quiz__intro">
+      <span class="rotulo">Quiz</span>
+      <h2>Qual máquina é você?</h2>
+      <p class="lead">Quatro perguntas rápidas e o museu escolhe a peça que combina com o seu jeito.</p>
+    </div>
+    <div class="quiz__caixa" id="quizCaixa" aria-live="polite"></div>
+  </div>
+</section>
+
+</main>
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><img src="img/logo.svg" alt="" width="72" height="48"><span>Museu do <b>Bit</b></span></a>
+        <p style="margin-top:1rem;max-width:42ch;color:var(--texto-2)">Um museu virtual dedicado aos computadores e consoles que moldaram a era digital, entre 1975 e 1995.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul><li><a href="index.html">Início</a></li><li><a href="acervo.html">Acervo</a></li><li><a href="linha-do-tempo.html">Linha do tempo</a></li><li><a href="sala-multimidia.html">Sala multimídia</a></li><li><a href="sobre.html">Sobre</a></li></ul>
+      </div>
+      <div>
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="sobre.html#contato">Fale com o curador</a></li>
+          <li><a href="sobre.html#faq">Perguntas frequentes</a></li>
+          <li><a href="acervo.html?favoritos=1">Meus favoritos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <span>© <span id="anoAtual">2026</span> Museu do Bit · Projeto de Webdesign</span>
+      <span>HTML + CSS + JavaScript puros</span>
+    </div>
+  </div>
+</footer>
+<button class="voltar-topo" id="voltarTopo" type="button" aria-label="Voltar ao topo">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
