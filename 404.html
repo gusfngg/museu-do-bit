@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada · Museu do Bit</title>
+<meta name="description" content="A página procurada não existe no Museu do Bit.">
+<meta name="theme-color" content="#0f0d0a">
+<meta property="og:title" content="Página não encontrada · Museu do Bit">
+<meta property="og:description" content="A página procurada não existe no Museu do Bit.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+
+</head>
+<body data-pagina="erro404">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" id="progresso"></div>
+<header class="topo">
+  <div class="container topo__barra">
+    <a class="marca" href="index.html" aria-label="Museu do Bit, página inicial">
+      <img src="img/logo.svg" alt="" width="72" height="48">
+      <span>Museu do <b>Bit</b></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+        <a class="menu__link" href="index.html">Início</a>
+        <a class="menu__link" href="acervo.html">Acervo</a>
+        <a class="menu__link" href="linha-do-tempo.html">Linha do tempo</a>
+        <a class="menu__link" href="sala-multimidia.html">Sala multimídia</a>
+        <a class="menu__link" href="sobre.html">Sobre</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn-icone" href="acervo.html?favoritos=1" aria-label="Meus favoritos">♥<span class="badge" id="contFav" data-zero="true">0</span></a>
+      <button class="btn-icone" id="btnTema" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+      <button class="btn-icone" id="btnCrt" type="button" aria-pressed="false" aria-label="Alternar efeito CRT">▤</button>
+      <button class="hamburguer" id="btnMenu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="conteudo">
+<section class="pagina-topo erro404">
+  <div class="container">
+    <span class="rotulo">Erro 404</span>
+    <h1>Sala <em>não encontrada</em></h1>
+    <p class="lead">Essa página não está no acervo. Talvez o disquete tenha corrompido.</p>
+    <div class="hero__acoes">
+      <a class="btn" href="index.html">Voltar à entrada</a>
+      <a class="btn btn--fantasma" href="acervo.html">Ir ao acervo</a>
+    </div>
+    <img class="erro404__arte" src="img/maquinas/macintosh-128k.svg" alt="Ilustração de um Macintosh 128K" width="320" height="240">
+  </div>
+</section>
+
+</main>
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><img src="img/logo.svg" alt="" width="72" height="48"><span>Museu do <b>Bit</b></span></a>
+        <p style="margin-top:1rem;max-width:42ch;color:var(--texto-2)">Um museu virtual dedicado aos computadores e consoles que moldaram a era digital, entre 1975 e 1995.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul><li><a href="index.html">Início</a></li><li><a href="acervo.html">Acervo</a></li><li><a href="linha-do-tempo.html">Linha do tempo</a></li><li><a href="sala-multimidia.html">Sala multimídia</a></li><li><a href="sobre.html">Sobre</a></li></ul>
+      </div>
+      <div>
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="sobre.html#contato">Fale com o curador</a></li>
+          <li><a href="sobre.html#faq">Perguntas frequentes</a></li>
+          <li><a href="acervo.html?favoritos=1">Meus favoritos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <span>© <span id="anoAtual">2026</span> Museu do Bit · Projeto de Webdesign</span>
+      <span>HTML + CSS + JavaScript puros</span>
+    </div>
+  </div>
+</footer>
+<button class="voltar-topo" id="voltarTopo" type="button" aria-label="Voltar ao topo">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
