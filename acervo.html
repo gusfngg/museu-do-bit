@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acervo · Museu do Bit</title>
+<meta name="description" content="Explore 15 computadores e consoles clássicos: busque, filtre por década e tipo, favorite e compare máquinas lado a lado.">
+<meta name="theme-color" content="#0f0d0a">
+<meta property="og:title" content="Acervo · Museu do Bit">
+<meta property="og:description" content="Explore 15 computadores e consoles clássicos: busque, filtre por década e tipo, favorite e compare máquinas lado a lado.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/acervo.js" defer></script>
+</head>
+<body data-pagina="acervo">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" id="progresso"></div>
+<header class="topo">
+  <div class="container topo__barra">
+    <a class="marca" href="index.html" aria-label="Museu do Bit, página inicial">
+      <img src="img/logo.svg" alt="" width="72" height="48">
+      <span>Museu do <b>Bit</b></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+        <a class="menu__link" href="index.html">Início</a>
+        <a class="menu__link" href="acervo.html">Acervo</a>
+        <a class="menu__link" href="linha-do-tempo.html">Linha do tempo</a>
+        <a class="menu__link" href="sala-multimidia.html">Sala multimídia</a>
+        <a class="menu__link" href="sobre.html">Sobre</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn-icone" href="acervo.html?favoritos=1" aria-label="Meus favoritos">♥<span class="badge" id="contFav" data-zero="true">0</span></a>
+      <button class="btn-icone" id="btnTema" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+      <button class="btn-icone" id="btnCrt" type="button" aria-pressed="false" aria-label="Alternar efeito CRT">▤</button>
+      <button class="hamburguer" id="btnMenu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="conteudo">
+<section class="pagina-topo">
+  <div class="container">
+    <span class="rotulo">Salas 02 a 04</span>
+    <h1>O acervo</h1>
+    <p class="lead">Quinze peças iluminadas, uma por vez. Busque, filtre, guarde as suas favoritas e coloque duas máquinas lado a lado.</p>
+  </div>
+</section>
+
+<section class="secao" style="padding-top:2rem">
+  <div class="container">
+    <form class="filtros" role="search" aria-label="Filtrar o acervo" onsubmit="return false">
+      <div class="campo campo--busca">
+        <label for="busca">Buscar</label>
+        <input id="busca" type="search" placeholder="Nome, fabricante, país ou processador" autocomplete="off">
+      </div>
+      <div class="campo">
+        <label for="fDecada">Década</label>
+        <select id="fDecada">
+          <option value="">Todas</option>
+          <option value="1970">Anos 70</option>
+          <option value="1980">Anos 80</option>
+          <option value="1990">Anos 90</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="fTipo">Tipo</label>
+        <select id="fTipo">
+          <option value="">Todos</option>
+          <option value="computador">Computadores</option>
+          <option value="console">Consoles</option>
+          <option value="portatil">Portáteis</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="fOrdem">Ordenar</label>
+        <select id="fOrdem">
+          <option value="ano-asc">Mais antigos</option>
+          <option value="ano-desc">Mais recentes</option>
+          <option value="nome">Nome (A–Z)</option>
+        </select>
+      </div>
+      <div class="filtros__chips">
+        <button class="chip-btn" id="fFav" type="button" aria-pressed="false">♥ Só favoritos</button>
+        <button class="chip-btn" id="fBr" type="button" aria-pressed="false">Feitos no Brasil</button>
+        <button class="chip-btn chip-btn--limpar" id="fLimpar" type="button">Limpar filtros</button>
+      </div>
+    </form>
+
+    <p class="contagem mono" id="contagem" aria-live="polite"></p>
+
+    <div class="grade-pecas" id="grade"></div>
+
+    <div class="vazio" id="vazio" hidden>
+      <img src="img/maquinas/atari-2600.svg" alt="" width="160" height="120">
+      <h2>Vitrine vazia</h2>
+      <p>Nenhuma peça combina com esses filtros. Que tal limpar a busca?</p>
+    </div>
+  </div>
+</section>
+
+<div class="comparador" id="comparador" hidden>
+  <div class="container comparador__corpo">
+    <div class="comparador__chips" id="compChips"></div>
+    <span class="comparador__info mono" id="compInfo"></span>
+    <div class="comparador__acoes">
+      <button class="btn btn--fantasma btn--pequeno" id="compLimpar" type="button">Limpar</button>
+      <button class="btn btn--pequeno" id="compAbrir" type="button" disabled>Comparar</button>
+    </div>
+  </div>
+</div>
+
+<dialog class="modal modal--comparar" id="dlgComparar" aria-labelledby="compTitulo">
+  <div class="comparar">
+    <button class="modal__fechar" data-fechar type="button" aria-label="Fechar comparação">✕</button>
+    <span class="rotulo">Lado a lado</span>
+    <h2 id="compTitulo">Comparador</h2>
+    <p class="lead" id="compResumo"></p>
+    <div class="tabela-rolagem">
+      <table class="tabela" id="compTabela"></table>
+    </div>
+  </div>
+</dialog>
+
+</main>
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><img src="img/logo.svg" alt="" width="72" height="48"><span>Museu do <b>Bit</b></span></a>
+        <p style="margin-top:1rem;max-width:42ch;color:var(--texto-2)">Um museu virtual dedicado aos computadores e consoles que moldaram a era digital, entre 1975 e 1995.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul><li><a href="index.html">Início</a></li><li><a href="acervo.html">Acervo</a></li><li><a href="linha-do-tempo.html">Linha do tempo</a></li><li><a href="sala-multimidia.html">Sala multimídia</a></li><li><a href="sobre.html">Sobre</a></li></ul>
+      </div>
+      <div>
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="sobre.html#contato">Fale com o curador</a></li>
+          <li><a href="sobre.html#faq">Perguntas frequentes</a></li>
+          <li><a href="acervo.html?favoritos=1">Meus favoritos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <span>© <span id="anoAtual">2026</span> Museu do Bit · Projeto de Webdesign</span>
+      <span>HTML + CSS + JavaScript puros</span>
+    </div>
+  </div>
+</footer>
+<button class="voltar-topo" id="voltarTopo" type="button" aria-label="Voltar ao topo">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -193,7 +193,7 @@ const Bit = (() => {
     alvos.forEach((a) => obs.observe(a));
   };
 
-  const cartaoPeca = (peca) => `
+  const cartaoPeca = (peca, opcoes = {}) => `
     <article class="peca" data-id="${peca.id}" data-revelar>
       ${peca.brasil ? '<span class="peca__tag">Brasil</span>' : ""}
       <button class="peca__fav" data-fav-id="${peca.id}" aria-pressed="false" aria-label="Favoritar ${peca.nome}">♥</button>
@@ -205,6 +205,7 @@ const Bit = (() => {
           <p>${peca.fabricante} · ${peca.ano}</p>
         </div>
       </button>
+      ${opcoes.comparar ? `<label class="peca__comparar"><input type="checkbox" data-comparar="${peca.id}"> Comparar</label>` : ""}
     </article>`;
 
   let modal;
@@ -304,8 +305,8 @@ const Bit = (() => {
     document.addEventListener("bit:favoritos", atualizarFavoritosUI);
   };
 
-  const desenharPecas = (container, lista) => {
-    container.innerHTML = lista.map(cartaoPeca).join("");
+  const desenharPecas = (container, lista, opcoes = {}) => {
+    container.innerHTML = lista.map((p) => cartaoPeca(p, opcoes)).join("");
     atualizarFavoritosUI();
     iniciarRevelar();
   };
