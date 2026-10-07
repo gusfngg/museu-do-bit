@@ -1812,3 +1812,254 @@ a:hover {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+
+[hidden] {
+  display: none !important;
+}
+
+.sobre {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.sobre__texto p {
+  color: var(--texto-2);
+  font-size: 1.05rem;
+}
+
+.cartao-autor {
+  position: sticky;
+  top: calc(var(--topo-h) + 1.5rem);
+  display: grid;
+  justify-items: start;
+  gap: 0.3rem;
+  padding: 1.75rem;
+  background: var(--bg-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra);
+}
+
+.cartao-autor img {
+  width: 96px;
+  height: auto;
+  margin-bottom: 0.8rem;
+  border-radius: 10px;
+}
+
+.cartao-autor h3 {
+  margin: 0;
+}
+
+.cartao-autor p {
+  margin: 0 0 0.8rem;
+  color: var(--texto-2);
+  font-size: 0.95rem;
+}
+
+.cartao-autor .mono {
+  font-size: 0.78rem;
+}
+
+.bastidores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1rem;
+}
+
+.bastidor {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.4rem;
+  background: var(--bg);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  font-size: 0.93rem;
+  color: var(--texto-2);
+  transition: transform 0.4s var(--ease), border-color 0.3s;
+}
+
+.bastidor:hover {
+  transform: translateY(-5px);
+  border-color: var(--ambar);
+}
+
+.bastidor strong {
+  font-family: var(--f-display);
+  font-size: 1.6rem;
+  color: var(--ambar);
+}
+
+.bastidor code {
+  font-family: var(--f-mono);
+  font-size: 0.85em;
+  color: var(--texto);
+}
+
+.faq-bloco {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.faq details {
+  border-bottom: 1px solid var(--linha);
+}
+
+.faq details:first-child {
+  border-top: 1px solid var(--linha);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 0.25rem;
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.2s;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-family: var(--f-mono);
+  font-size: 1.2rem;
+  color: var(--ambar);
+  border: 1px solid var(--linha);
+  border-radius: 50%;
+  transition: transform 0.35s var(--ease), background 0.2s, color 0.2s;
+}
+
+.faq summary:hover {
+  color: var(--ambar);
+}
+
+.faq details[open] summary::after {
+  content: "−";
+  transform: rotate(180deg);
+  background: var(--ambar);
+  color: var(--sobre-ambar);
+}
+
+.faq details p {
+  margin: 0;
+  padding: 0 0.25rem 1.3rem;
+  color: var(--texto-2);
+  animation: abre 0.45s var(--ease);
+}
+
+@keyframes abre {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.contato {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.contato__caixa {
+  padding: clamp(1.4rem, 3.5vw, 2.4rem);
+  background: var(--bg);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra);
+}
+
+.contato__caixa form {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.campo__erro {
+  min-height: 1.2em;
+  font-size: 0.82rem;
+  color: #ff7b72;
+}
+
+[data-tema="claro"] .campo__erro {
+  color: #b42318;
+}
+
+.campo--erro input,
+.campo--erro select,
+.campo--erro textarea {
+  border-color: #ff7b72;
+}
+
+.contador {
+  float: right;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--texto-2);
+}
+
+.contador--alerta {
+  color: var(--rosa);
+}
+
+.aceite label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.93rem;
+  cursor: pointer;
+}
+
+.aceite input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--ambar);
+}
+
+.sucesso {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  animation: modal-entra 0.6s var(--ease);
+}
+
+.sucesso:focus {
+  outline: none;
+}
+
+.sucesso__icone {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--sobre-ambar);
+  background: var(--verde);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--verde) 22%, transparent);
+}
+
+.sucesso h3 {
+  margin: 0.4rem 0 0;
+}
+
+.sucesso p {
+  color: var(--texto-2);
+}
