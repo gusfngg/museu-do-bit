@@ -114,7 +114,7 @@
   };
 
   const executar = async (texto) => {
-    escrever(`$ ${texto}`, "eco");
+    escrever(`C:\\Museu> ${texto}`, "eco");
     const [cmd, ...resto] = texto.trim().split(/\s+/);
     if (!cmd) return;
     const acao = comandos[cmd.toLowerCase()];
@@ -123,7 +123,7 @@
   };
 
   if (form) {
-    escrever("Museu do Bit OS 1.0 — digite help para começar.", "dim");
+    escrever("Museu do Bit [Versão 1.0]\nCopyright (c) Museu do Bit. Digite help para começar.\n", "dim");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const texto = entrada.value;

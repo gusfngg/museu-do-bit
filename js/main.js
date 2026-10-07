@@ -217,8 +217,12 @@ const Bit = (() => {
     modal.className = "modal";
     modal.setAttribute("aria-labelledby", "modalTitulo");
     modal.innerHTML = `
+      <div class="modal__barra">
+        <img src="img/logo.svg" alt="" width="72" height="48">
+        <span id="modalBarra">Museu do Bit</span>
+        <button class="modal__fechar" data-fechar type="button" aria-label="Fechar detalhes">✕</button>
+      </div>
       <div class="modal__corpo">
-        <button class="modal__fechar" data-fechar aria-label="Fechar detalhes">✕</button>
         <div class="modal__palco"><img id="modalImg" alt="" width="320" height="240"></div>
         <div class="modal__info">
           <span class="rotulo" id="modalNo"></span>
@@ -256,6 +260,7 @@ const Bit = (() => {
     $("#modalImg", modal).alt = `Ilustração do ${peca.nome}`;
     $("#modalNo", modal).textContent = `Nº ${numeroDe(peca.id)} · ${TIPOS[peca.tipo]}`;
     $("#modalTitulo", modal).textContent = peca.nome;
+    $("#modalBarra", modal).textContent = `Museu do Bit - ${peca.nome}`;
     $("#modalDescricao", modal).textContent = peca.descricao;
     $("#modalFicha", modal).innerHTML = [
       ["Fabricante", peca.fabricante],
