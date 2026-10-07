@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linha do tempo · Museu do Bit</title>
+<meta name="description" content="Vinte anos de história dos computadores e consoles, de 1975 a 1995, com eras ilustradas e navegação por ano.">
+<meta name="theme-color" content="#0f0d0a">
+<meta property="og:title" content="Linha do tempo · Museu do Bit">
+<meta property="og:description" content="Vinte anos de história dos computadores e consoles, de 1975 a 1995, com eras ilustradas e navegação por ano.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/data.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/timeline.js" defer></script>
+</head>
+<body data-pagina="linha">
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div class="progresso" id="progresso"></div>
+<header class="topo">
+  <div class="container topo__barra">
+    <a class="marca" href="index.html" aria-label="Museu do Bit, página inicial">
+      <img src="img/logo.svg" alt="" width="72" height="48">
+      <span>Museu do <b>Bit</b></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Principal">
+        <a class="menu__link" href="index.html">Início</a>
+        <a class="menu__link" href="acervo.html">Acervo</a>
+        <a class="menu__link" href="linha-do-tempo.html">Linha do tempo</a>
+        <a class="menu__link" href="sala-multimidia.html">Sala multimídia</a>
+        <a class="menu__link" href="sobre.html">Sobre</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="btn-icone" href="acervo.html?favoritos=1" aria-label="Meus favoritos">♥<span class="badge" id="contFav" data-zero="true">0</span></a>
+      <button class="btn-icone" id="btnTema" type="button" aria-label="Alternar tema claro e escuro">◐</button>
+      <button class="btn-icone" id="btnCrt" type="button" aria-pressed="false" aria-label="Alternar efeito CRT">▤</button>
+      <button class="hamburguer" id="btnMenu" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="conteudo">
+<section class="pagina-topo">
+  <div class="container">
+    <span class="rotulo">Sala 05</span>
+    <h1>Linha do tempo</h1>
+    <p class="lead">Vinte anos em que o computador saiu dos laboratórios, entrou na sala de estar e virou parte da vida de todo mundo.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Três eras</span>
+        <h2>Como tudo mudou</h2>
+      </div>
+    </div>
+    <div class="eras">
+      <article class="era" data-revelar>
+        <img src="img/eras/era-70.svg" alt="Ilustração em pixel art de um sol laranja listrado, típica dos anos 70" width="400" height="240" loading="lazy">
+        <div class="era__texto">
+          <span class="era__anos">1975 — 1979</span>
+          <h3>Os pioneiros</h3>
+          <p>Kits de montar, fitas cassete e chaves no painel. Quem tinha um computador em casa era, quase sempre, quem o tinha construído.</p>
+        </div>
+      </article>
+      <article class="era" data-revelar>
+        <img src="img/eras/era-80.svg" alt="Ilustração em pixel art de um sol amarelo sobre uma grade rosa, típica dos anos 80" width="400" height="240" loading="lazy">
+        <div class="era__texto">
+          <span class="era__anos">1980 — 1989</span>
+          <h3>A explosão doméstica</h3>
+          <p>Micros baratos, jogos em fita, revistas de listagens e, no Brasil, clones nacionais que ensinaram uma geração a programar.</p>
+        </div>
+      </article>
+      <article class="era" data-revelar>
+        <img src="img/eras/era-90.svg" alt="Ilustração em pixel art de uma janela de sistema sobre azulejos azul-petróleo, típica dos anos 90" width="400" height="240" loading="lazy">
+        <div class="era__texto">
+          <span class="era__anos">1990 — 1995</span>
+          <h3>Multimídia e 3D</h3>
+          <p>CD-ROM, interfaces de janelas e gráficos poligonais. O computador deixa de ser coisa de nerd e vira eletrodoméstico.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="secao secao--alt">
+  <div class="container">
+    <div class="cabeca">
+      <div>
+        <span class="rotulo">Navegue pelos anos</span>
+        <h2>Arraste, role ou use o controle</h2>
+      </div>
+      <div class="linha__nav">
+        <button class="btn-icone" id="linhaAnt" type="button" aria-label="Evento anterior">←</button>
+        <button class="btn-icone" id="linhaProx" type="button" aria-label="Próximo evento">→</button>
+      </div>
+    </div>
+
+    <div class="controle-ano">
+      <label for="sliderAno" class="mono">Ano</label>
+      <input id="sliderAno" type="range" step="1" value="1975" aria-describedby="anoSaida">
+      <output id="anoSaida" class="controle-ano__saida" for="sliderAno">1975</output>
+    </div>
+
+    <div class="linha__progresso" aria-hidden="true"><span id="linhaBarra"></span></div>
+  </div>
+
+  <ol class="linha__trilho" id="trilho" tabindex="0" aria-label="Eventos da história dos computadores, de 1975 a 1995"></ol>
+</section>
+
+</main>
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><img src="img/logo.svg" alt="" width="72" height="48"><span>Museu do <b>Bit</b></span></a>
+        <p style="margin-top:1rem;max-width:42ch;color:var(--texto-2)">Um museu virtual dedicado aos computadores e consoles que moldaram a era digital, entre 1975 e 1995.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul><li><a href="index.html">Início</a></li><li><a href="acervo.html">Acervo</a></li><li><a href="linha-do-tempo.html">Linha do tempo</a></li><li><a href="sala-multimidia.html">Sala multimídia</a></li><li><a href="sobre.html">Sobre</a></li></ul>
+      </div>
+      <div>
+        <h4>Projeto</h4>
+        <ul>
+          <li><a href="sobre.html#contato">Fale com o curador</a></li>
+          <li><a href="sobre.html#faq">Perguntas frequentes</a></li>
+          <li><a href="acervo.html?favoritos=1">Meus favoritos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <span>© <span id="anoAtual">2026</span> Museu do Bit · Projeto de Webdesign</span>
+      <span>HTML + CSS + JavaScript puros</span>
+    </div>
+  </div>
+</footer>
+<button class="voltar-topo" id="voltarTopo" type="button" aria-label="Voltar ao topo">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
