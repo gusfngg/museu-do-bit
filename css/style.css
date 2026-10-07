@@ -1217,3 +1217,245 @@ a:hover {
     transform: translateY(1px);
   }
 }
+
+.pagina-topo {
+  padding-block: clamp(2.5rem, 6vw, 5rem) 1rem;
+  background: radial-gradient(50% 90% at 90% 0%, color-mix(in srgb, var(--ambar) 16%, transparent), transparent 70%);
+}
+
+.pagina-topo h1 {
+  font-size: clamp(2.4rem, 1.4rem + 5vw, 5rem);
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bg-2);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-g);
+}
+
+.campo {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.campo label {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ambar);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 0.75rem 0.95rem;
+  font: inherit;
+  font-size: 0.97rem;
+  color: var(--texto);
+  background: var(--bg);
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo input:hover,
+.campo select:hover,
+.campo textarea:hover {
+  border-color: var(--texto-2);
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: var(--ambar);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ambar) 22%, transparent);
+}
+
+.filtros__chips {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip-btn {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--texto);
+  background: transparent;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+
+.chip-btn:hover {
+  border-color: var(--ambar);
+  transform: translateY(-2px);
+}
+
+.chip-btn[aria-pressed="true"] {
+  background: var(--ambar);
+  border-color: var(--ambar);
+  color: var(--sobre-ambar);
+  font-weight: 600;
+}
+
+.chip-btn--limpar {
+  margin-left: auto;
+  border-style: dashed;
+  color: var(--texto-2);
+}
+
+.contagem {
+  margin: 1.5rem 0 1.25rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--texto-2);
+}
+
+.vazio {
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--texto-2);
+  border: 1px dashed var(--linha);
+  border-radius: var(--raio-g);
+}
+
+.vazio[hidden] {
+  display: none;
+}
+
+.vazio img {
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+.comparador {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 95;
+  padding-block: 0.85rem;
+  background: color-mix(in srgb, var(--bg-2) 92%, transparent);
+  backdrop-filter: blur(14px);
+  border-top: 2px solid var(--ambar);
+  box-shadow: 0 -20px 40px -20px rgba(0, 0, 0, 0.6);
+  animation: sobe 0.5s var(--ease);
+}
+
+.comparador[hidden] {
+  display: none;
+}
+
+@keyframes sobe {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+.comparador__corpo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.comparador__chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  background: var(--bg-3);
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+}
+
+.comparador__info {
+  margin-right: auto;
+  font-size: 0.78rem;
+  color: var(--texto-2);
+}
+
+.comparador__acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.modal--comparar {
+  width: min(860px, 100% - 1.5rem);
+}
+
+.comparar {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.tabela-rolagem {
+  overflow-x: auto;
+}
+
+.tabela {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.tabela th,
+.tabela td {
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--linha);
+  vertical-align: top;
+}
+
+.tabela thead th {
+  text-align: center;
+  font-family: var(--f-display);
+  font-size: 1.15rem;
+  border-bottom: 2px solid var(--ambar);
+}
+
+.tabela thead th img {
+  margin: 0 auto 0.4rem;
+  width: 160px;
+}
+
+.tabela tbody th {
+  width: 22%;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ambar);
+}
+
+.tabela tbody tr:hover {
+  background: var(--bg-3);
+}
