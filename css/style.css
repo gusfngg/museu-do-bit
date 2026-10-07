@@ -2286,3 +2286,28 @@ a:hover {
     transform: none;
   }
 }
+
+.erro404 em {
+  font-style: normal;
+  color: var(--ambar);
+}
+
+.erro404__arte {
+  width: min(320px, 70%);
+  margin-top: 2.5rem;
+  opacity: 0.85;
+  animation: flutua 4s ease-in-out infinite;
+}
+
+@keyframes flutua {
+  50% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+}
+
+.sem-js {
+  padding: 1.25rem 1.5rem;
+  color: var(--texto-2);
+  border: 1px dashed var(--linha);
+  border-radius: var(--raio);
+}
