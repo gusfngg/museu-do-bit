@@ -71,8 +71,7 @@ const Bit = (() => {
 
   const iniciarTema = () => {
     const salvo = guardar.ler("bit-tema", null);
-    const preferido = window.matchMedia("(prefers-color-scheme: light)").matches ? "claro" : "escuro";
-    aplicarTema(salvo || preferido);
+    aplicarTema(salvo || "escuro");
     const botao = $("#btnTema");
     if (botao)
       botao.addEventListener("click", () => {
