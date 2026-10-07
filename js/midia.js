@@ -67,7 +67,7 @@
           : 0.25 + 0.55 * Math.abs(Math.sin(fase + i * 0.45) * Math.cos(fase * 0.6 + i * 0.2));
       }
       const alto = Math.max(4, valor * h * 0.92);
-      const blocos = Math.floor(alto / (larg * 0.9));
+      const blocos = Math.max(1, Math.floor(alto / (larg * 0.9)));
       for (let b = 0; b < blocos; b++) {
         ctx2d.globalAlpha = 0.35 + (b / Math.max(blocos, 1)) * 0.65;
         ctx2d.fillStyle = cor;
