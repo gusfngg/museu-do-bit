@@ -875,6 +875,17 @@ a:hover {
   height: 16px;
 }
 
+.peca:has(.peca__comparar input:checked) {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--azul) 35%, transparent), var(--sombra);
+}
+
+.peca:has(.peca__comparar input:checked) .peca__comparar {
+  color: var(--azul);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--azul) 10%, transparent);
+}
+
 .peca[hidden] {
   display: none;
 }
