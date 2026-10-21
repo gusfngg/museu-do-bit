@@ -336,7 +336,7 @@ function criarModal() {
 function preencherModal(peca) {
   idAberto = peca.id;
   document.getElementById("modalImg").src = "img/maquinas/" + peca.id + ".jpg";
-  document.getElementById("modalImg").alt = "Ilustração do " + peca.nome;
+  document.getElementById("modalImg").alt = "Foto do " + peca.nome;
   document.getElementById("modalNo").textContent = "Nº " + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo];
   document.getElementById("modalTitulo").textContent = peca.nome;
   document.getElementById("modalBarra").textContent = "Museu do Bit - " + peca.nome;

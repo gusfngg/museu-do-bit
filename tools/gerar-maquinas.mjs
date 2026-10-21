@@ -1,3 +1,4 @@
+// Script de apoio gerado com IA (Claude) para facilitar a criação da mídia do projeto.
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";

@@ -6,7 +6,7 @@ Museu virtual de computadores e consoles clássicos (1975–1995), feito com **H
 
 ## O que é
 
-Quinze máquinas, de Altair 8800 a PlayStation, incluindo dois micros brasileiros (TK 90X e Gradiente Expert). Cada peça tem ilustração em pixel art, ficha técnica e uma curiosidade. O visitante pode buscar, filtrar, favoritar, comparar, ouvir sons, ver vídeos e até digitar comandos num terminal.
+Quinze máquinas, de Altair 8800 a PlayStation, incluindo dois micros brasileiros (TK 90X e Gradiente Expert). Cada peça tem foto real, ficha técnica e uma curiosidade. O visitante pode buscar, filtrar, favoritar, comparar, ouvir sons, ver vídeos e até digitar comandos num terminal.
 
 A identidade visual é um tributo ao **Windows 7 (Aero)**: branco e azul, barras de título de vidro translúcido com o botão vermelho de fechar, botões brilhantes, barra de tarefas no rodapé, janela de prompt de comando no terminal, barra de progresso verde, dica amarela de ferramenta e tipografia no estilo Segoe UI (Open Sans como alternativa na web). Há também um tema escuro em azul-marinho.
 
@@ -62,32 +62,32 @@ Variáveis CSS · tema claro e tema escuro azul-marinho · vidro Aero com `linea
 
 ## Como a mídia foi criada
 
-Nada foi copiado de outros sites. Tudo é gerado por scripts em `tools/`:
+| Mídia | Origem |
+| --- | --- |
+| 15 fotos das máquinas (`img/maquinas/*.jpg`) | Fotos reais do Wikimedia Commons, com licença livre, sobre fundos temáticos. Créditos em "Sobre" → "De onde vêm as fotos das máquinas?" |
+| Logo, favicon, hero e 3 capas de era | SVG feitos para o projeto |
+| 15 ilustrações em pixel art (`img/maquinas/*.svg`) | SVG feitos para o projeto, usados na página 404 e na vitrine vazia |
+| 4 sons | Sintetizados com ondas quadrada, pulso, serra e triângulo |
+| 2 vídeos | Gerados com `ffmpeg` a partir dos filtros `life` (Jogo da Vida) e `cellauto` (autômato celular, regra 90) |
+
+## Scripts de apoio (`tools/`)
+
+Os scripts da pasta `tools/` foram gerados com IA (Claude) para facilitar a criação da mídia. Eles não fazem parte do site: só produzem arquivos que ficam em `img/` e `audio/`.
 
 | Script | O que gera |
 | --- | --- |
-| `tools/gerar-maquinas.mjs` | 15 ilustrações SVG em pixel art das máquinas (usadas no 404 e na vitrine vazia) |
-| `tools/compor-maquina.py` | Foto real de uma máquina sobre fundo temático → `img/maquinas/<id>.jpg` (precisa de Pillow) |
+| `tools/gerar-maquinas.mjs` | As 15 ilustrações SVG em pixel art (404 e vitrine vazia) |
 | `tools/gerar-marca.mjs` | Logo, favicon, hero e as 3 capas de era |
-| `tools/sintetizar-audio.py` | 4 sons sintetizados (ondas quadrada, pulso, serra e triângulo) |
-
-Os dois vídeos foram gerados com `ffmpeg` a partir dos filtros `life` (Jogo da Vida) e `cellauto` (autômato celular, regra 90).
-
-```bash
-node tools/gerar-maquinas.mjs
-node tools/gerar-marca.mjs
-python3 tools/sintetizar-audio.py
-```
+| `tools/compor-maquina.py` | Foto de uma máquina sobre o fundo temático → `img/maquinas/<id>.jpg` (precisa de Pillow) |
+| `tools/sintetizar-audio.py` | Os 4 sons sintetizados |
 
 ## Como rodar
 
-Basta abrir o `index.html`. Para o visualizador de áudio funcionar por completo, sirva a pasta por HTTP:
+Basta abrir o `index.html`. Para o visualizador de áudio funcionar por completo, sirva a pasta por HTTP, por exemplo com a extensão Live Server do VS Code ou com:
 
 ```bash
-python3 -m http.server 8000
+npx serve .
 ```
-
-e acesse `http://localhost:8000`.
 
 ## Estrutura
 
@@ -97,11 +97,10 @@ css/style.css
 js/data.js        dados do acervo e da linha do tempo
 js/main.js        núcleo: tema, menu, favoritos, modal, rolagem
 js/home.js · acervo.js · timeline.js · midia.js · sobre.js
-img/ · audio/ · video/ · tools/
+img/ · audio/ · video/
 ```
 
 ## Observações
 
 - Os dados técnicos foram revisados com cuidado, mas valores como clock e vendas são aproximados (marcados com `~` ou "estimativas"). Para uso acadêmico, confirme em uma fonte primária.
-- As fotos das máquinas (`img/maquinas/*.jpg`) são fotos reais do Wikimedia Commons montadas sobre fundos temáticos com `tools/compor-maquina.py`. Autores e licenças estão em "Sobre" → "De onde vêm as fotos das máquinas?".
 - O formulário de contato é uma simulação: nada é enviado.

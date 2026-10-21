@@ -1,3 +1,4 @@
+# Script de apoio gerado com IA (Claude) para facilitar a criação da mídia do projeto.
 """Compõe a foto real de uma máquina sobre um fundo temático (1280x960, JPEG).
 
 Uso:

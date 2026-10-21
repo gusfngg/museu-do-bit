@@ -1,3 +1,4 @@
+# Script de apoio gerado com IA (Claude) para facilitar a criação da mídia do projeto.
 import math
 import random
 import struct
