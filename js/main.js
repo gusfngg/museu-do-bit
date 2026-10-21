@@ -305,7 +305,8 @@ function criarModal() {
     '<button class="modal__fechar" data-fechar type="button" aria-label="Fechar detalhes">✕</button>' +
     "</div>" +
     '<div class="modal__corpo">' +
-    '<div class="modal__palco"><img id="modalImg" alt="" width="320" height="240"></div>' +
+    '<div class="modal__palco"><img id="modalImg" alt="" width="320" height="240">' +
+    '<p class="modal__credito" id="modalCredito"></p></div>' +
     '<div class="modal__info">' +
     '<span class="rotulo" id="modalNo"></span>' +
     '<h2 id="modalTitulo"></h2>' +
@@ -354,6 +355,7 @@ function preencherModal(peca) {
   idAberto = peca.id;
   document.getElementById("modalImg").src = "img/maquinas/" + peca.id + ".jpg";
   document.getElementById("modalImg").alt = "Foto do " + peca.nome;
+  document.getElementById("modalCredito").textContent = "Foto: " + peca.credito;
   document.getElementById("modalNo").textContent = "Nº " + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo];
   document.getElementById("modalTitulo").textContent = peca.nome;
   document.getElementById("modalBarra").textContent = "Museu do Bit - " + peca.nome;

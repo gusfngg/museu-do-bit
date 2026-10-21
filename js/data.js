@@ -1,6 +1,7 @@
 const ACERVO = [
   {
     id: "altair-8800", nome: "Altair 8800", fabricante: "MITS", ano: 1975, tipo: "computador", pais: "EUA",
+    credito: "Ed Uthman · CC BY-SA 2.0",
     cpu: "Intel 8080 · 2 MHz", memoria: "256 bytes (padrão)", midia: "Chaves no painel frontal",
     perfil: "programar", brasil: false,
     descricao: "Vendido como kit de montar, não tinha tela nem teclado: o usuário programava bit a bit, movendo chaves e lendo luzes.",
@@ -8,6 +9,7 @@ const ACERVO = [
   },
   {
     id: "apple-ii", nome: "Apple II", fabricante: "Apple", ano: 1977, tipo: "computador", pais: "EUA",
+    credito: "Rama & Musée Bolo · CC BY-SA 2.0 FR",
     cpu: "MOS 6502 · 1 MHz", memoria: "4 KB a 48 KB", midia: "Fita cassete e disquete",
     perfil: "trabalho", brasil: false,
     descricao: "Um dos primeiros computadores pessoais prontos para usar, com gráficos coloridos e slots de expansão.",
@@ -15,6 +17,7 @@ const ACERVO = [
   },
   {
     id: "atari-2600", nome: "Atari 2600", fabricante: "Atari", ano: 1977, tipo: "console", pais: "EUA",
+    credito: "Evan-Amos · domínio público",
     cpu: "MOS 6507 · ~1,19 MHz", memoria: "128 bytes", midia: "Cartucho",
     perfil: "jogos", brasil: false,
     descricao: "O console que levou os videogames de cartucho para a sala de milhões de famílias.",
@@ -22,6 +25,7 @@ const ACERVO = [
   },
   {
     id: "ibm-pc-5150", nome: "IBM PC 5150", fabricante: "IBM", ano: 1981, tipo: "computador", pais: "EUA",
+    credito: "Rama & Musée Bolo · CC BY-SA 2.0 FR",
     cpu: "Intel 8088 · 4,77 MHz", memoria: "16 KB a 256 KB", midia: "Disquete de 5¼ pol.",
     perfil: "trabalho", brasil: false,
     descricao: "O computador que levou a informática para dentro dos escritórios e definiu o padrão dos PCs até hoje.",
@@ -29,6 +33,7 @@ const ACERVO = [
   },
   {
     id: "commodore-64", nome: "Commodore 64", fabricante: "Commodore", ano: 1982, tipo: "computador", pais: "EUA",
+    credito: "Evan-Amos · domínio público",
     cpu: "MOS 6510 · ~1 MHz", memoria: "64 KB", midia: "Fita e disquete",
     perfil: "criar", brasil: false,
     descricao: "Barato, colorido e com um chip de som lendário, virou o computador doméstico de uma geração.",
@@ -36,6 +41,7 @@ const ACERVO = [
   },
   {
     id: "zx-spectrum", nome: "ZX Spectrum", fabricante: "Sinclair", ano: 1982, tipo: "computador", pais: "Reino Unido",
+    credito: "Nico Kaiser · CC BY 2.0",
     cpu: "Zilog Z80A · 3,5 MHz", memoria: "16 KB ou 48 KB", midia: "Fita cassete",
     perfil: "programar", brasil: false,
     descricao: "Pequeno, barato e com teclado de borracha, abriu a programação para uma geração inteira de jovens britânicos.",
@@ -43,6 +49,7 @@ const ACERVO = [
   },
   {
     id: "macintosh-128k", nome: "Macintosh 128K", fabricante: "Apple", ano: 1984, tipo: "computador", pais: "EUA",
+    credito: "Sailko · CC BY 3.0",
     cpu: "Motorola 68000 · ~7,83 MHz", memoria: "128 KB", midia: "Disquete de 3½ pol.",
     perfil: "criar", brasil: false,
     descricao: "O primeiro Mac popularizou a interface gráfica e o mouse, tudo em um gabinete compacto com tela de 9 polegadas.",
@@ -50,6 +57,7 @@ const ACERVO = [
   },
   {
     id: "tk-90x", nome: "TK 90X", fabricante: "Microdigital", ano: 1985, tipo: "computador", pais: "Brasil",
+    credito: "Thomas Conté · CC BY-SA 2.0",
     cpu: "Zilog Z80A · 3,5 MHz", memoria: "48 KB", midia: "Fita cassete",
     perfil: "programar", brasil: true,
     descricao: "Clone brasileiro do ZX Spectrum, foi a porta de entrada na programação para muita gente nos anos 80.",
@@ -57,6 +65,7 @@ const ACERVO = [
   },
   {
     id: "expert-msx", nome: "Gradiente Expert", fabricante: "Gradiente", ano: 1985, tipo: "computador", pais: "Brasil",
+    credito: "Carlosar · CC BY-SA 3.0",
     cpu: "Zilog Z80A · 3,58 MHz", memoria: "64 KB", midia: "Cartucho e fita",
     perfil: "criar", brasil: true,
     descricao: "A versão brasileira do padrão MSX, que prometia que todo software rodaria em qualquer micro da família.",
@@ -64,6 +73,7 @@ const ACERVO = [
   },
   {
     id: "nes", nome: "NES (Famicom)", fabricante: "Nintendo", ano: 1985, tipo: "console", pais: "Japão",
+    credito: "Evan-Amos · domínio público",
     cpu: "Ricoh 2A03 · ~1,79 MHz", memoria: "2 KB", midia: "Cartucho",
     perfil: "jogos", brasil: false,
     descricao: "Lançado como Famicom no Japão em 1983, chegou ao Ocidente em 1985 e reergueu o mercado de videogames.",
@@ -71,6 +81,7 @@ const ACERVO = [
   },
   {
     id: "amiga-500", nome: "Amiga 500", fabricante: "Commodore", ano: 1987, tipo: "computador", pais: "EUA",
+    credito: "Bill Bertram · CC BY-SA 2.5",
     cpu: "Motorola 68000 · ~7,09 MHz", memoria: "512 KB", midia: "Disquete de 3½ pol.",
     perfil: "criar", brasil: false,
     descricao: "Som estéreo de 4 canais e gráficos avançados para a época fizeram dele o queridinho de músicos e artistas digitais.",
@@ -78,6 +89,7 @@ const ACERVO = [
   },
   {
     id: "mega-drive", nome: "Mega Drive", fabricante: "Sega", ano: 1988, tipo: "console", pais: "Japão",
+    credito: "Evan-Amos · domínio público",
     cpu: "Motorola 68000 · ~7,6 MHz", memoria: "64 KB", midia: "Cartucho",
     perfil: "jogos", brasil: false,
     descricao: "Console de 16 bits que bancou a rivalidade com a Nintendo e deu origem ao mascote Sonic.",
@@ -85,6 +97,7 @@ const ACERVO = [
   },
   {
     id: "game-boy", nome: "Game Boy", fabricante: "Nintendo", ano: 1989, tipo: "portatil", pais: "Japão",
+    credito: "Evan-Amos · domínio público",
     cpu: "Sharp LR35902 · ~4,19 MHz", memoria: "8 KB", midia: "Cartucho",
     perfil: "jogos", brasil: false,
     descricao: "Tela de 160×144 em quatro tons de verde e bateria que durava dezenas de horas: o portátil que ninguém derrubou.",
@@ -92,6 +105,7 @@ const ACERVO = [
   },
   {
     id: "snes", nome: "Super Nintendo", fabricante: "Nintendo", ano: 1990, tipo: "console", pais: "Japão",
+    credito: "Evan-Amos · domínio público",
     cpu: "Ricoh 5A22 · até ~3,58 MHz", memoria: "128 KB", midia: "Cartucho",
     perfil: "jogos", brasil: false,
     descricao: "Cores vibrantes, som sampleado e o efeito Mode 7, que girava e inclinava o cenário.",
@@ -99,6 +113,7 @@ const ACERVO = [
   },
   {
     id: "playstation", nome: "PlayStation", fabricante: "Sony", ano: 1994, tipo: "console", pais: "Japão",
+    credito: "Evan-Amos · domínio público",
     cpu: "MIPS R3000A · ~33,8 MHz", memoria: "2 MB", midia: "CD-ROM",
     perfil: "jogos", brasil: false,
     descricao: "Apostou no CD e no 3D poligonal, e transformou a Sony em potência dos videogames.",
