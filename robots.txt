@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://museu-do-bit.vercel.app/sitemap.xml
