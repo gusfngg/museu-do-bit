@@ -273,8 +273,25 @@ function desenharPecas(container, lista, comparar) {
     html += criarCartao(lista[i], comparar);
   }
   container.innerHTML = html;
+  mostrarFotosAoCarregar(container);
   atualizarFavoritos();
   revelarElementos();
+}
+
+function mostrarFotosAoCarregar(container) {
+  const fotos = container.querySelectorAll(".peca__palco img");
+  for (let i = 0; i < fotos.length; i++) {
+    if (fotos[i].complete) {
+      fotos[i].classList.add("carregada");
+    } else {
+      fotos[i].addEventListener("load", function () {
+        this.classList.add("carregada");
+      });
+      fotos[i].addEventListener("error", function () {
+        this.classList.add("carregada");
+      });
+    }
+  }
 }
 
 function criarModal() {
