@@ -355,7 +355,11 @@ function preencherModal(peca) {
   idAberto = peca.id;
   document.getElementById("modalImg").src = "img/maquinas/" + peca.id + ".jpg";
   document.getElementById("modalImg").alt = "Foto do " + peca.nome;
-  document.getElementById("modalCredito").textContent = "Foto: " + peca.credito;
+  if (peca.credito) {
+    document.getElementById("modalCredito").textContent = "Foto: " + peca.credito;
+  } else {
+    document.getElementById("modalCredito").textContent = "";
+  }
   document.getElementById("modalNo").textContent = "Nº " + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo];
   document.getElementById("modalTitulo").textContent = peca.nome;
   document.getElementById("modalBarra").textContent = "Museu do Bit - " + peca.nome;

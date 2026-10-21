@@ -996,6 +996,7 @@ a:hover {
 .modal__palco {
   display: grid;
   place-items: center;
+  align-content: center;
   padding: 2rem;
   background:
     conic-gradient(from 180deg at 50% -10%, transparent 36%, color-mix(in srgb, var(--azul) 24%, transparent) 50%, transparent 64%),
