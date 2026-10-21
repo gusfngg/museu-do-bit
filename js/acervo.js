@@ -90,7 +90,7 @@ function atualizarBarraComparador() {
   let chips = "";
   for (let i = 0; i < comparando.length; i++) {
     const peca = buscarPeca(comparando[i]);
-    chips += '<span class="chip"><img src="img/maquinas/' + peca.id + '.svg" alt="" width="32" height="24">' + peca.nome + "</span>";
+    chips += '<span class="chip"><img src="img/maquinas/' + peca.id + '.jpg" alt="" width="32" height="24">' + peca.nome + "</span>";
   }
   document.getElementById("compChips").innerHTML = chips;
 
@@ -138,8 +138,8 @@ function abrirComparacao() {
   ];
 
   let tabela = "<thead><tr><th></th>";
-  tabela += '<th scope="col"><img src="img/maquinas/' + a.id + '.svg" alt="" width="160" height="120"><span>' + a.nome + "</span></th>";
-  tabela += '<th scope="col"><img src="img/maquinas/' + b.id + '.svg" alt="" width="160" height="120"><span>' + b.nome + "</span></th>";
+  tabela += '<th scope="col"><img src="img/maquinas/' + a.id + '.jpg" alt="" width="160" height="120"><span>' + a.nome + "</span></th>";
+  tabela += '<th scope="col"><img src="img/maquinas/' + b.id + '.jpg" alt="" width="160" height="120"><span>' + b.nome + "</span></th>";
   tabela += "</tr></thead><tbody>";
   for (let i = 0; i < linhas.length; i++) {
     tabela += '<tr><th scope="row">' + linhas[i][0] + "</th><td>" + linhas[i][1] + "</td><td>" + linhas[i][2] + "</td></tr>";

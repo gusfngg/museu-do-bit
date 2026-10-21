@@ -66,7 +66,8 @@ Nada foi copiado de outros sites. Tudo é gerado por scripts em `tools/`:
 
 | Script | O que gera |
 | --- | --- |
-| `tools/gerar-maquinas.mjs` | 15 ilustrações SVG em pixel art das máquinas |
+| `tools/gerar-maquinas.mjs` | 15 ilustrações SVG em pixel art das máquinas (usadas no 404 e na vitrine vazia) |
+| `tools/compor-maquina.py` | Foto real de uma máquina sobre fundo temático → `img/maquinas/<id>.jpg` (precisa de Pillow) |
 | `tools/gerar-marca.mjs` | Logo, favicon, hero e as 3 capas de era |
 | `tools/sintetizar-audio.py` | 4 sons sintetizados (ondas quadrada, pulso, serra e triângulo) |
 
@@ -102,5 +103,5 @@ img/ · audio/ · video/ · tools/
 ## Observações
 
 - Os dados técnicos foram revisados com cuidado, mas valores como clock e vendas são aproximados (marcados com `~` ou "estimativas"). Para uso acadêmico, confirme em uma fonte primária.
-- As ilustrações são simplificadas e não pretendem ser fiéis ao milímetro.
+- As fotos das máquinas (`img/maquinas/*.jpg`) são fotos reais do Wikimedia Commons montadas sobre fundos temáticos com `tools/compor-maquina.py`. Autores e licenças estão em "Sobre" → "De onde vêm as fotos das máquinas?".
 - O formulário de contato é uma simulação: nada é enviado.

@@ -284,7 +284,7 @@ function mostrarResultado() {
 
   caixaQuiz.innerHTML =
     '<div class="quiz__resultado">' +
-    '<div class="quiz__img"><img src="img/maquinas/' + escolhida.id + '.svg" alt="Ilustração do ' + escolhida.nome + '" width="320" height="240"></div>' +
+    '<div class="quiz__img"><img src="img/maquinas/' + escolhida.id + '.jpg" alt="Foto do ' + escolhida.nome + '" width="320" height="240"></div>' +
     "<div>" +
     '<span class="rotulo">Seu resultado</span>' +
     "<h3>Você é o " + escolhida.nome + "</h3>" +

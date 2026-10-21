@@ -254,7 +254,7 @@ function criarCartao(peca, comparar) {
   }
   html += '<button class="peca__fav" data-fav-id="' + peca.id + '" aria-pressed="false" aria-label="Favoritar ' + peca.nome + '">♥</button>';
   html += '<button class="peca__abrir" data-abrir="' + peca.id + '" aria-label="Ver detalhes de ' + peca.nome + '">';
-  html += '<div class="peca__palco"><img src="img/maquinas/' + peca.id + '.svg" alt="Ilustração do ' + peca.nome + '" width="320" height="240" loading="lazy"></div>';
+  html += '<div class="peca__palco"><img src="img/maquinas/' + peca.id + '.jpg" alt="Foto do ' + peca.nome + '" width="320" height="240" loading="lazy"></div>';
   html += '<div class="peca__placa">';
   html += '<span class="peca__no">Nº ' + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo].toUpperCase() + "</span>";
   html += "<h3>" + peca.nome + "</h3>";
@@ -335,7 +335,7 @@ function criarModal() {
 
 function preencherModal(peca) {
   idAberto = peca.id;
-  document.getElementById("modalImg").src = "img/maquinas/" + peca.id + ".svg";
+  document.getElementById("modalImg").src = "img/maquinas/" + peca.id + ".jpg";
   document.getElementById("modalImg").alt = "Ilustração do " + peca.nome;
   document.getElementById("modalNo").textContent = "Nº " + numeroDaPeca(peca.id) + " · " + TIPOS[peca.tipo];
   document.getElementById("modalTitulo").textContent = peca.nome;
