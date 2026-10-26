@@ -1473,13 +1473,6 @@ a:hover {
   scroll-snap-type: x proximity;
   scrollbar-width: thin;
   scrollbar-color: var(--azul) var(--bg-3);
-  cursor: grab;
-}
-
-.linha__trilho.arrastando {
-  cursor: grabbing;
-  scroll-snap-type: none;
-  user-select: none;
 }
 
 .linha__trilho::before {

@@ -7,9 +7,6 @@ const botaoProximo = document.getElementById("linhaProx");
 
 let itens = [];
 let usandoSlider = false;
-let arrastando = false;
-let inicioX = 0;
-let inicioScroll = 0;
 
 function desenharEventos() {
   const anosVistos = [];
@@ -159,27 +156,6 @@ trilho.addEventListener("keydown", function (e) {
   if (e.key === "ArrowLeft") {
     andar(-1);
   }
-});
-
-trilho.addEventListener("mousedown", function (e) {
-  if (e.target.closest("button")) {
-    return;
-  }
-  arrastando = true;
-  inicioX = e.clientX;
-  inicioScroll = trilho.scrollLeft;
-  trilho.classList.add("arrastando");
-});
-
-window.addEventListener("mousemove", function (e) {
-  if (arrastando) {
-    trilho.scrollLeft = inicioScroll - (e.clientX - inicioX);
-  }
-});
-
-window.addEventListener("mouseup", function () {
-  arrastando = false;
-  trilho.classList.remove("arrastando");
 });
 
 window.addEventListener("hashchange", irParaHash);
