@@ -124,7 +124,6 @@ function iniciarTema() {
   });
 }
 
-
 function abrirMenu(aberto) {
   const menu = document.getElementById("menu");
   const botao = document.getElementById("btnMenu");
@@ -229,7 +228,7 @@ function iniciarRolagem() {
   aoRolar();
 }
 
-function criarCartao(peca, comparar) {
+function criarCartao(peca) {
   let html = '<article class="peca" data-id="' + peca.id + '" data-revelar>';
   if (peca.brasil) {
     html += '<span class="peca__tag">Brasil</span>';
@@ -242,17 +241,14 @@ function criarCartao(peca, comparar) {
   html += "<h3>" + peca.nome + "</h3>";
   html += "<p>" + peca.fabricante + " · " + peca.ano + "</p>";
   html += "</div></button>";
-  if (comparar) {
-    html += '<label class="peca__comparar"><input type="checkbox" data-comparar="' + peca.id + '"> Comparar</label>';
-  }
   html += "</article>";
   return html;
 }
 
-function desenharPecas(container, lista, comparar) {
+function desenharPecas(container, lista) {
   let html = "";
   for (let i = 0; i < lista.length; i++) {
-    html += criarCartao(lista[i], comparar);
+    html += criarCartao(lista[i]);
   }
   container.innerHTML = html;
   mostrarFotosAoCarregar(container);

@@ -12,7 +12,7 @@ function sortearDestaques() {
     sorteadas.push(copia[indice]);
     copia.splice(indice, 1);
   }
-  desenharPecas(document.getElementById("destaques"), sorteadas, false);
+  desenharPecas(document.getElementById("destaques"), sorteadas);
 }
 
 function escrever(texto, classe) {

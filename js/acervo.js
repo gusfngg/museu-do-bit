@@ -7,8 +7,6 @@ const selectTipo = document.getElementById("fTipo");
 const selectOrdem = document.getElementById("fOrdem");
 const botaoFavoritos = document.getElementById("fFav");
 const botaoBrasil = document.getElementById("fBr");
-const barraComparador = document.getElementById("comparador");
-const dialogComparar = document.getElementById("dlgComparar");
 
 const parametros = new URLSearchParams(location.search);
 let textoBusca = parametros.get("q") || "";
@@ -17,7 +15,6 @@ let filtroTipo = parametros.get("tipo") || "";
 let ordem = "ano-asc";
 let soFavoritos = parametros.get("favoritos") === "1";
 let soBrasil = false;
-let comparando = [];
 
 function tirarAcentos(texto) {
   return texto.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -84,33 +81,9 @@ function atualizarUrl() {
   }
 }
 
-function atualizarBarraComparador() {
-  barraComparador.hidden = comparando.length === 0;
-
-  let chips = "";
-  for (let i = 0; i < comparando.length; i++) {
-    const peca = buscarPeca(comparando[i]);
-    chips += '<span class="chip"><img src="img/maquinas/' + peca.id + '.jpg" alt="" width="32" height="24">' + peca.nome + "</span>";
-  }
-  document.getElementById("compChips").innerHTML = chips;
-
-  if (comparando.length === 1) {
-    document.getElementById("compInfo").textContent = "Escolha mais uma peça";
-  } else {
-    document.getElementById("compInfo").textContent = "Pronto para comparar";
-  }
-  document.getElementById("compAbrir").disabled = comparando.length < 2;
-}
-
 function desenhar() {
   const lista = filtrarPecas();
-  desenharPecas(grade, lista, true);
-
-  const caixas = grade.querySelectorAll("[data-comparar]");
-  for (let i = 0; i < caixas.length; i++) {
-    caixas[i].checked = comparando.includes(caixas[i].dataset.comparar);
-  }
-
+  desenharPecas(grade, lista);
   vazio.hidden = lista.length > 0;
   contagem.textContent = "Mostrando " + lista.length + " de " + ACERVO.length + " peças";
   botaoFavoritos.setAttribute("aria-pressed", soFavoritos);
@@ -122,42 +95,6 @@ function aoMudarFavoritos() {
   if (soFavoritos) {
     desenhar();
   }
-}
-
-function abrirComparacao() {
-  const a = buscarPeca(comparando[0]);
-  const b = buscarPeca(comparando[1]);
-  const linhas = [
-    ["Fabricante", a.fabricante, b.fabricante],
-    ["Ano", a.ano, b.ano],
-    ["País", a.pais, b.pais],
-    ["Tipo", TIPOS[a.tipo], TIPOS[b.tipo]],
-    ["Processador", a.cpu, b.cpu],
-    ["Memória", a.memoria, b.memoria],
-    ["Mídia", a.midia, b.midia],
-  ];
-
-  let tabela = "<thead><tr><th></th>";
-  tabela += '<th scope="col"><img src="img/maquinas/' + a.id + '.jpg" alt="" width="160" height="120"><span>' + a.nome + "</span></th>";
-  tabela += '<th scope="col"><img src="img/maquinas/' + b.id + '.jpg" alt="" width="160" height="120"><span>' + b.nome + "</span></th>";
-  tabela += "</tr></thead><tbody>";
-  for (let i = 0; i < linhas.length; i++) {
-    tabela += '<tr><th scope="row">' + linhas[i][0] + "</th><td>" + linhas[i][1] + "</td><td>" + linhas[i][2] + "</td></tr>";
-  }
-  tabela += "</tbody>";
-  document.getElementById("compTabela").innerHTML = tabela;
-
-  const diferenca = Math.abs(a.ano - b.ano);
-  let resumo = "";
-  if (diferenca === 0) {
-    resumo = "Chegaram ao mercado no mesmo ano.";
-  } else if (diferenca === 1) {
-    resumo = "1 ano separa os dois lançamentos.";
-  } else {
-    resumo = diferenca + " anos separam os dois lançamentos.";
-  }
-  document.getElementById("compResumo").textContent = resumo;
-  dialogComparar.showModal();
 }
 
 function limparFiltros() {
@@ -211,42 +148,4 @@ botaoBrasil.addEventListener("click", function () {
 
 document.getElementById("fLimpar").addEventListener("click", limparFiltros);
 
-grade.addEventListener("change", function (e) {
-  const caixa = e.target.closest("[data-comparar]");
-  if (caixa === null) {
-    return;
-  }
-  const id = caixa.dataset.comparar;
-
-  if (caixa.checked) {
-    if (comparando.length >= 2) {
-      caixa.checked = false;
-      mostrarToast("Compare até 2 peças por vez");
-      return;
-    }
-    comparando.push(id);
-  } else {
-    comparando.splice(comparando.indexOf(id), 1);
-  }
-  atualizarBarraComparador();
-});
-
-document.getElementById("compLimpar").addEventListener("click", function () {
-  comparando = [];
-  const caixas = grade.querySelectorAll("[data-comparar]");
-  for (let i = 0; i < caixas.length; i++) {
-    caixas[i].checked = false;
-  }
-  atualizarBarraComparador();
-});
-
-document.getElementById("compAbrir").addEventListener("click", abrirComparacao);
-
-dialogComparar.addEventListener("click", function (e) {
-  if (e.target === dialogComparar || e.target.closest("[data-fechar]")) {
-    dialogComparar.close();
-  }
-});
-
 desenhar();
-atualizarBarraComparador();

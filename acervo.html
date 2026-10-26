@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Acervo · Museu do Bit</title>
-  <meta name="description" content="Explore 15 computadores e consoles clássicos: busque, filtre por década e tipo, favorite e compare máquinas lado a lado.">
+  <meta name="description" content="Explore 15 computadores e consoles clássicos: busque, filtre por década e tipo e guarde suas favoritas.">
   <meta name="theme-color" content="#dbe9f8">
   <meta property="og:title" content="Acervo · Museu do Bit">
-  <meta property="og:description" content="Explore 15 computadores e consoles clássicos: busque, filtre por década e tipo, favorite e compare máquinas lado a lado.">
+  <meta property="og:description" content="Explore 15 computadores e consoles clássicos: busque, filtre por década e tipo e guarde suas favoritas.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://museu-do-bit.vercel.app/img/maquinas/commodore-64.jpg">
   <meta property="og:image:width" content="1280">
@@ -106,29 +106,6 @@
         </div>
       </div>
     </section>
-
-    <div class="comparador" id="comparador" hidden>
-      <div class="container comparador__corpo">
-        <div class="comparador__chips" id="compChips"></div>
-        <span class="comparador__info mono" id="compInfo"></span>
-        <div class="comparador__acoes">
-          <button class="btn btn--fantasma btn--pequeno" id="compLimpar" type="button">Limpar</button>
-          <button class="btn btn--pequeno" id="compAbrir" type="button" disabled>Comparar</button>
-        </div>
-      </div>
-    </div>
-
-    <dialog class="modal modal--comparar" id="dlgComparar" aria-labelledby="compTitulo">
-      <div class="comparar">
-        <button class="modal__fechar" data-fechar type="button" aria-label="Fechar comparação">✕</button>
-        <span class="rotulo">Lado a lado</span>
-        <h2 id="compTitulo">Comparador</h2>
-        <p class="lead" id="compResumo"></p>
-        <div class="tabela-rolagem">
-          <table class="tabela" id="compTabela"></table>
-        </div>
-      </div>
-    </dialog>
 
   </main>
   <footer class="rodape">
