@@ -8,12 +8,11 @@ const selectOrdem = document.getElementById("fOrdem");
 const botaoFavoritos = document.getElementById("fFav");
 const botaoBrasil = document.getElementById("fBr");
 
-const parametros = new URLSearchParams(location.search);
-let textoBusca = parametros.get("q") || "";
-let filtroDecada = parametros.get("decada") || "";
-let filtroTipo = parametros.get("tipo") || "";
+let textoBusca = "";
+let filtroDecada = "";
+let filtroTipo = "";
 let ordem = "ano-asc";
-let soFavoritos = parametros.get("favoritos") === "1";
+let soFavoritos = location.search.includes("favoritos=1");
 let soBrasil = false;
 
 function tirarAcentos(texto) {
@@ -59,28 +58,6 @@ function filtrarPecas() {
   return resultado;
 }
 
-function atualizarUrl() {
-  const novos = new URLSearchParams();
-  if (textoBusca !== "") {
-    novos.set("q", textoBusca);
-  }
-  if (filtroDecada !== "") {
-    novos.set("decada", filtroDecada);
-  }
-  if (filtroTipo !== "") {
-    novos.set("tipo", filtroTipo);
-  }
-  if (soFavoritos) {
-    novos.set("favoritos", "1");
-  }
-  const texto = novos.toString();
-  if (texto === "") {
-    history.replaceState(null, "", location.pathname);
-  } else {
-    history.replaceState(null, "", "?" + texto);
-  }
-}
-
 function desenhar() {
   const lista = filtrarPecas();
   desenharPecas(grade, lista);
@@ -88,7 +65,6 @@ function desenhar() {
   contagem.textContent = "Mostrando " + lista.length + " de " + ACERVO.length + " peças";
   botaoFavoritos.setAttribute("aria-pressed", soFavoritos);
   botaoBrasil.setAttribute("aria-pressed", soBrasil);
-  atualizarUrl();
 }
 
 function aoMudarFavoritos() {
