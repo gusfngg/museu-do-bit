@@ -1,3 +1,5 @@
+/* ========== Cores e variáveis (tema claro e tema escuro) ========== */
+
 :root {
   --bg: #eef4fb;
   --bg-2: #ffffff;
@@ -44,6 +46,8 @@
   --botao-2: linear-gradient(180deg, #4a74a8 0%, #355d92 48%, #284c80 52%, #3a6296 100%);
 }
 
+/* ========== Base: reset, tipografia e classes de apoio ========== */
+
 *,
 *::before,
 *::after {
@@ -69,8 +73,7 @@ body {
 
 img,
 svg,
-video,
-canvas {
+video {
   display: block;
   max-width: 100%;
 }
@@ -140,15 +143,6 @@ a:hover {
   border-block: 1px solid var(--linha);
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
 .pular {
   position: fixed;
   top: -60px;
@@ -194,6 +188,8 @@ a:hover {
 .mono {
   font-family: var(--f-mono);
 }
+
+/* ========== Cabeçalho: barra de leitura, logo, menu e hambúrguer ========== */
 
 .progresso {
   position: fixed;
@@ -390,6 +386,8 @@ a:hover {
   transform: rotate(-45deg);
 }
 
+/* ========== Botões ========== */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -434,6 +432,8 @@ a:hover {
   padding: 0.5rem 1rem;
   font-size: 0.88rem;
 }
+
+/* ========== Rodapé, botão de voltar ao topo e aviso (toast) ========== */
 
 .rodape {
   margin-top: 2rem;
@@ -542,6 +542,8 @@ a:hover {
   visibility: visible;
   transition-delay: 0s;
 }
+
+/* ========== Início: hero, faixa animada e números ========== */
 
 .hero {
   position: relative;
@@ -704,6 +706,8 @@ a:hover {
   text-transform: uppercase;
   color: var(--texto-2);
 }
+
+/* ========== Cartões das peças (usados no início e no acervo) ========== */
 
 .cabeca {
   display: flex;
@@ -891,6 +895,8 @@ a:hover {
   display: none;
 }
 
+/* ========== Revelar ao rolar ========== */
+
 [data-revelar] {
   opacity: 0;
   transform: translateY(26px);
@@ -905,6 +911,8 @@ a:hover {
 .sem-rolagem {
   overflow: hidden;
 }
+
+/* ========== Ficha da peça (janela modal) ========== */
 
 .modal {
   width: min(960px, 100% - 1.5rem);
@@ -1057,6 +1065,8 @@ a:hover {
   justify-content: space-between;
 }
 
+/* ========== Terminal do início ========== */
+
 .terminal {
   max-width: 860px;
   margin-inline: auto;
@@ -1155,6 +1165,8 @@ a:hover {
   outline: none;
 }
 
+/* ========== Quiz do início ========== */
+
 .quiz {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
@@ -1232,6 +1244,8 @@ a:hover {
   border: 1px solid var(--linha);
   border-radius: var(--raio);
 }
+
+/* ========== Acervo: topo da página, filtros e vitrine vazia ========== */
 
 .pagina-topo {
   padding-block: clamp(2.5rem, 6vw, 5rem) 1rem;
@@ -1363,6 +1377,8 @@ a:hover {
   transform: none;
   box-shadow: none;
 }
+
+/* ========== Linha do tempo ========== */
 
 .eras {
   display: grid;
@@ -1552,6 +1568,8 @@ a:hover {
   color: var(--texto-2);
 }
 
+/* ========== Sala multimídia: players de áudio e vídeos ========== */
+
 .volume {
   display: flex;
   align-items: center;
@@ -1699,6 +1717,8 @@ a:hover {
 [hidden] {
   display: none !important;
 }
+
+/* ========== Sobre: autor, bastidores, FAQ e formulário ========== */
 
 .sobre {
   display: grid;
@@ -1946,6 +1966,10 @@ a:hover {
 .sucesso p {
   color: var(--texto-2);
 }
+
+/* ========== Visual Windows 7 (Aero) ========== */
+/* Veste o layout acima com vidro, brilho e gradientes.
+   Vem depois da base de propósito: estas regras sobrescrevem as de cima. */
 
 body {
   background:
@@ -2738,6 +2762,8 @@ h3 {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
+/* ========== Responsivo: 1024px (tablet), 860px e 560px (celular) ========== */
+
 @media (max-width: 1024px) {
   .hero__grade {
     grid-template-columns: 1fr;
@@ -2921,6 +2947,8 @@ h3 {
   }
 }
 
+/* ========== Menos animação para quem pede isso no sistema ========== */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -2936,6 +2964,8 @@ h3 {
     transform: none;
   }
 }
+
+/* ========== Página 404 e aviso de JavaScript desligado ========== */
 
 .erro404 em {
   font-style: normal;
