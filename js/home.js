@@ -54,7 +54,7 @@ function comandoHelp() {
   escrever("sid             toca a melodia do chip de som");
   escrever("fav             mostra seus favoritos");
   escrever("tema            alterna claro/escuro");
-  escrever("crt             liga/desliga o efeito CRT");
+
   escrever("clear           limpa a tela");
 }
 
@@ -168,8 +168,6 @@ function executarComando(texto) {
     comandoFav();
   } else if (comando === "tema") {
     document.getElementById("btnTema").click();
-  } else if (comando === "crt") {
-    document.getElementById("btnCrt").click();
   } else if (comando === "clear") {
     saida.innerHTML = "";
   } else if (comando === "whoami") {

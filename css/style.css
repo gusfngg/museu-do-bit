@@ -1262,29 +1262,6 @@ a:hover {
   border-radius: var(--raio);
 }
 
-.crt::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 400;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0, rgba(0, 0, 0, 0.22) 1px, transparent 1px, transparent 3px),
-    radial-gradient(120% 120% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.55));
-  mix-blend-mode: multiply;
-  animation: tremer 0.18s steps(2) infinite;
-}
-
-.crt main,
-.crt .topo {
-  text-shadow: 0 0 6px color-mix(in srgb, var(--azul) 40%, transparent);
-}
-
-@keyframes tremer {
-  50% {
-    transform: translateY(1px);
-  }
-}
 
 .pagina-topo {
   padding-block: clamp(2.5rem, 6vw, 5rem) 1rem;
@@ -3079,10 +3056,6 @@ h3 {
 
   .marca img {
     width: 34px;
-  }
-
-  #btnCrt {
-    display: none;
   }
 
   .filtros {

@@ -124,24 +124,6 @@ function iniciarTema() {
   });
 }
 
-function aplicarCrt(ligado) {
-  document.body.classList.toggle("crt", ligado);
-  document.getElementById("btnCrt").setAttribute("aria-pressed", ligado);
-  salvarStorage("bit-crt", ligado);
-}
-
-function iniciarCrt() {
-  aplicarCrt(lerStorage("bit-crt", false));
-  document.getElementById("btnCrt").addEventListener("click", function () {
-    const ligado = !document.body.classList.contains("crt");
-    aplicarCrt(ligado);
-    if (ligado) {
-      mostrarToast("Efeito CRT ligado");
-    } else {
-      mostrarToast("Efeito CRT desligado");
-    }
-  });
-}
 
 function abrirMenu(aberto) {
   const menu = document.getElementById("menu");
@@ -444,7 +426,6 @@ function cliqueNoDocumento(e) {
 
 function iniciarSite() {
   iniciarTema();
-  iniciarCrt();
   iniciarMenu();
   iniciarRolagem();
   atualizarFavoritos();
