@@ -1,8 +1,6 @@
 const saida = document.getElementById("termSaida");
 const formTerminal = document.getElementById("termForm");
 const entrada = document.getElementById("termEntrada");
-const historico = [];
-let posicaoHistorico = 0;
 
 function sortearDestaques() {
   const copia = ACERVO.slice();
@@ -170,10 +168,6 @@ function executarComando(texto) {
     document.getElementById("btnTema").click();
   } else if (comando === "clear") {
     saida.innerHTML = "";
-  } else if (comando === "whoami") {
-    escrever("visitante nº " + Math.floor(1000 + Math.random() * 8999));
-  } else if (comando === "sudo") {
-    escrever("boa tentativa. Aqui o curador sou eu.", "erro");
   } else {
     escrever("comando não encontrado: " + comando + ". Digite help.", "erro");
   }
@@ -185,30 +179,8 @@ function iniciarTerminal() {
 
   formTerminal.addEventListener("submit", function (e) {
     e.preventDefault();
-    const texto = entrada.value;
-    if (texto.trim() !== "") {
-      historico.push(texto);
-      posicaoHistorico = historico.length;
-    }
+    executarComando(entrada.value);
     entrada.value = "";
-    executarComando(texto);
-  });
-
-  entrada.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowUp" && historico.length > 0) {
-      e.preventDefault();
-      if (posicaoHistorico > 0) {
-        posicaoHistorico--;
-      }
-      entrada.value = historico[posicaoHistorico];
-    }
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      if (posicaoHistorico < historico.length) {
-        posicaoHistorico++;
-      }
-      entrada.value = historico[posicaoHistorico] || "";
-    }
   });
 
   document.getElementById("terminal").addEventListener("click", function () {
