@@ -1,17 +1,7 @@
 const cartoesSom = document.querySelectorAll(".som");
-const canvas = document.getElementById("visualizador");
-const contexto = canvas.getContext("2d");
 const controleVolume = document.getElementById("volume");
 const textoVolume = document.getElementById("volumeSaida");
 const videos = document.querySelectorAll("video");
-
-const usaAnalisador = location.protocol.startsWith("http");
-let audioContext = null;
-let analisador = null;
-let dadosFrequencia = null;
-let audioTocando = null;
-let fase = 0;
-const fontesCriadas = [];
 
 function formatarTempo(segundos) {
   if (!isFinite(segundos)) {
@@ -20,77 +10,6 @@ function formatarTempo(segundos) {
   const minutos = Math.floor(segundos / 60);
   const resto = Math.floor(segundos % 60);
   return minutos + ":" + String(resto).padStart(2, "0");
-}
-
-function prepararAnalisador(audio) {
-  if (!usaAnalisador) {
-    return;
-  }
-  try {
-    if (audioContext === null) {
-      audioContext = new AudioContext();
-      analisador = audioContext.createAnalyser();
-      analisador.fftSize = 128;
-      analisador.connect(audioContext.destination);
-      dadosFrequencia = new Uint8Array(analisador.frequencyBinCount);
-    }
-    if (!fontesCriadas.includes(audio)) {
-      const fonte = audioContext.createMediaElementSource(audio);
-      fonte.connect(analisador);
-      fontesCriadas.push(audio);
-    }
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
-  } catch (erro) {
-    analisador = null;
-  }
-}
-
-function ajustarCanvas() {
-  const caixa = canvas.getBoundingClientRect();
-  canvas.width = caixa.width;
-  canvas.height = caixa.height;
-}
-
-function desenharBarras() {
-  const largura = canvas.width;
-  const altura = canvas.height;
-  const cor = getComputedStyle(document.documentElement).getPropertyValue("--ciano").trim() || "#2bb3e8";
-  const quantidade = 32;
-  const larguraBarra = largura / quantidade;
-
-  contexto.clearRect(0, 0, largura, altura);
-  fase = fase + 0.12;
-
-  if (analisador !== null && audioTocando !== null) {
-    analisador.getByteFrequencyData(dadosFrequencia);
-  }
-
-  for (let i = 0; i < quantidade; i++) {
-    let valor = 0.04;
-    if (audioTocando !== null) {
-      if (analisador !== null) {
-        valor = dadosFrequencia[Math.floor((i / quantidade) * dadosFrequencia.length * 0.7)] / 255;
-      } else {
-        valor = 0.25 + 0.55 * Math.abs(Math.sin(fase + i * 0.45) * Math.cos(fase * 0.6 + i * 0.2));
-      }
-    }
-
-    const alturaBarra = Math.max(4, valor * altura * 0.92);
-    let blocos = Math.floor(alturaBarra / (larguraBarra * 0.9));
-    if (blocos < 1) {
-      blocos = 1;
-    }
-
-    for (let b = 0; b < blocos; b++) {
-      contexto.globalAlpha = 0.35 + (b / blocos) * 0.65;
-      contexto.fillStyle = cor;
-      contexto.fillRect(i * larguraBarra + 2, altura - (b + 1) * larguraBarra * 0.9, larguraBarra - 4, larguraBarra * 0.9 - 3);
-    }
-  }
-  contexto.globalAlpha = 1;
-  requestAnimationFrame(desenharBarras);
 }
 
 function pararOutros(mediaAtual) {
@@ -117,7 +36,6 @@ function configurarPlayer(cartao) {
   botao.addEventListener("click", function () {
     if (audio.paused) {
       pararOutros(audio);
-      prepararAnalisador(audio);
       audio.play().catch(function () {
         mostrarToast("Não foi possível reproduzir o áudio");
       });
@@ -127,7 +45,6 @@ function configurarPlayer(cartao) {
   });
 
   audio.addEventListener("play", function () {
-    audioTocando = audio;
     for (let i = 0; i < cartoesSom.length; i++) {
       cartoesSom[i].classList.toggle("som--ativo", cartoesSom[i] === cartao);
     }
@@ -136,9 +53,6 @@ function configurarPlayer(cartao) {
   });
 
   function aoParar() {
-    if (audioTocando === audio) {
-      audioTocando = null;
-    }
     cartao.classList.remove("som--ativo");
     botao.setAttribute("aria-label", "Tocar " + titulo);
     botao.textContent = "▶";
@@ -209,7 +123,3 @@ for (let i = 0; i < caixasVideo.length; i++) {
 
 controleVolume.addEventListener("input", mudarVolume);
 mudarVolume();
-
-window.addEventListener("resize", ajustarCanvas);
-ajustarCanvas();
-desenharBarras();

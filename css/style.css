@@ -1572,20 +1572,6 @@ a:hover {
   accent-color: var(--azul);
 }
 
-.visualizador {
-  margin-bottom: 1.75rem;
-  padding: 1rem;
-  background: #070604;
-  border: 1px solid var(--linha);
-  border-radius: var(--raio-g);
-  box-shadow: inset 0 0 60px rgba(255, 176, 0, 0.08);
-}
-
-.visualizador canvas {
-  width: 100%;
-  height: 170px;
-}
-
 .sons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2542,19 +2528,6 @@ h3 {
 .controle-ano__saida {
   font-weight: 300;
   color: var(--azul);
-}
-
-.visualizador {
-  padding: 30px 0 0;
-  background: linear-gradient(180deg, #0f4a8c, #06204a);
-  border: 1px solid #5a86bd;
-  border-radius: 8px;
-  box-shadow: var(--sombra);
-}
-
-.visualizador canvas {
-  padding: 0.75rem 1rem 1rem;
-  background: linear-gradient(180deg, #0f3a73, #06204a);
 }
 
 .som--ativo {
